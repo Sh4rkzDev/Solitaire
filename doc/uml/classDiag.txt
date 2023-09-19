@@ -5,34 +5,42 @@ skin rose
 title Solitaire - Class Diagram
 
 
-class card {
+class Card {
   - number
   - visible
   + getData()
 }
 
-class solitaire {
-  - rules
+interface Solitaire {
   + validAction()
   + victory()
-  
 }
 
-class deck {
+class Deck {
   - cards
   + getCard()
 }
 
-enum suit {
+enum Suit {
   hearts
   clubs
   diamonds
   spades
 }
 
-solitaire "1" *-up- "1" deck: Composition
-deck "1" *-up- "many" card: Composition
-card "*" - "4" suit
+class Solitaire1 {
+  - rules
+}
+
+class Solitaire2 {
+  - rules
+}
+
+Solitaire "*" <.up. "1" Deck: Dependency
+Deck "1" *-up- "*" Card: Composition
+Card  ->  Suit
+Solitaire1 ..right|> Solitaire: Implements
+Solitaire2 ..left|> Solitaire: Implements
 
 
 @enduml
