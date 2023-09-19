@@ -6,7 +6,6 @@ title Solitaire - Class Diagram
 
 
 class card {
-  - suit
   - number
   - visible
   + getData()
@@ -24,8 +23,16 @@ class deck {
   + getCard()
 }
 
+enum suit {
+  hearts
+  clubs
+  diamonds
+  spades
+}
+
 solitaire "1" *-up- "1" deck: Composition
 deck "1" *-up- "many" card: Composition
+card "*" - "4" suit
 
 
 @enduml
