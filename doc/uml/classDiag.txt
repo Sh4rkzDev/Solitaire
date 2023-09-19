@@ -1,0 +1,31 @@
+@startuml
+
+skin rose
+
+title Solitaire - Class Diagram
+
+
+class card {
+  - suit
+  - number
+  - visible
+  + getData()
+}
+
+class solitaire {
+  - rules
+  + validAction()
+  + victory()
+  
+}
+
+class deck {
+  - cards
+  + getCard()
+}
+
+solitaire "1" *-up- "1" deck: Composition
+deck "1" *-up- "many" card: Composition
+
+
+@enduml
