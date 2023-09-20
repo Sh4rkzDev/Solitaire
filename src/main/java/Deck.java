@@ -6,22 +6,36 @@ public class Deck {
 
     private final ArrayList<Card> cards = new ArrayList<>();
 
-    public Deck(byte quant) { // TODO: quantity of suits to use. Will create deck with that amount of suits
+    public Deck(byte suits) {
+        addCards(suits);
+        Collections.shuffle(cards);
+    }
+
+    public Deck(byte suits, byte decks) {
+        for (int nDecks = 0; nDecks < decks; nDecks++) {
+            addCards(suits);
+        }
+        Collections.shuffle(cards);
+    }
+
+    private void addCards(byte suits) {
         ArrayList<String> numbers = new ArrayList<>(
                 Arrays.asList("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
         );
         for (Suit s : Suit.values()) {
-            if (s.ordinal()-1 == quant) {
+            if (s.ordinal() == suits) {
                 break;
             }
-
-            for (String num : numbers) {
-                Card c = new Card(s, num);
-                cards.add(c);
+            for (int i = 0; i <= Suit.values().length - suits; i++) {
+                if (suits == 2 && i == 2) { // For suits = 1 or 4 it works, but for 2 suits it doesnt.
+                    break;
+                }
+                for (String num : numbers) {
+                    Card c = new Card(s, num);
+                    cards.add(c);
+                }
             }
         }
-        Collections.shuffle(cards);
-
     }
 
     public Card getCard() {

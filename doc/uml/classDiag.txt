@@ -36,7 +36,7 @@ class Solitaire2 {
   - rules
 }
 
-Solitaire "*" <.up. "1" Deck: Dependency
+Solitaire "*" .up.> "1" Deck: Dependency
 Deck "1" *-up- "*" Card: Composition
 Card  ->  Suit
 Solitaire1 ..right|> Solitaire: Implements
