@@ -27,7 +27,7 @@ public class Deck {
                 break;
             }
             for (int i = 0; i <= Suit.values().length - suits; i++) {
-                if (suits == 2 && i == 2) { // For suits = 1 or 4 it works, but for 2 suits it doesnt.
+                if (suits == 2 && i == 2) { // For suits = 1 or 4 it works, but for 2 suits it doesn't.
                     break;
                 }
                 for (String num : numbers) {
