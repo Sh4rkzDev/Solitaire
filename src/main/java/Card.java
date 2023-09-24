@@ -16,6 +16,8 @@ public class Card {
         return suit;
     }
 
+    public void makeItVisible(){this.visible = true;}//La vamos a necesitar para ir mostrando cartas.
+
     public boolean isVisible() {
         return visible;
     }

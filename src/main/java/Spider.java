@@ -44,13 +44,21 @@ public class Spider implements Solitaire {
         //Returns true or false in case the move is valid or not.
 
         if ( col<tableau.size() && colDestination<tableau.size() && row<tableau.get(col).size()) { //We verify that the given columns and row are valid.
-
             int indexLastElementOrigin =  tableau.get(col).size()-1;
-            int indexLastElementDestination = tableau.get(colDestination).size()-1;
             Card cardOrigin = tableau.get(col).get(row);
-            Card cardDestination = tableau.get(col).get(indexLastElementDestination);
+            Card cardDestination;
 
-            if (cardOrigin.isVisible() && cardDestination.isVisible()){
+            //If we want to move a card or a slice of cards to an empty space the logic changes.
+            if (!tableau.get(colDestination).isEmpty()){
+                int indexLastElementDestination = tableau.get(colDestination).size()-1;
+                cardDestination = tableau.get(col).get(indexLastElementDestination);
+            }else {
+                Suit suit = Suit.CLUBS;
+                cardDestination = new Card(suit," ");    //Due to it is empty, we create an "empty" card
+                cardDestination.makeItVisible();
+            }
+
+            if (!cardOrigin.isVisible() && !cardDestination.isVisible()){
                 return false;
             }
 
@@ -90,10 +98,14 @@ public class Spider implements Solitaire {
 
     public boolean rightOrder(Card cardOrigin, Card cardDestination){
         //Reminder: two cards are stackable even tho they are not from the same suit.
+        //Reminder: we can stack any card above an empty space.
+        if (Objects.equals(cardDestination.getNum(), " ")){
+            return true;
+        }
+
         ArrayList<String> orderedDeck = new ArrayList<>(
                 Arrays.asList("K","Q","J","10","9","8","7","6","5","4","3","2","A")
         );
-
         return Objects.equals(orderedDeck.indexOf(cardOrigin.getNum())-1, orderedDeck.indexOf(cardDestination.getNum()));
     }
 
