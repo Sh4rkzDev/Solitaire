@@ -23,10 +23,24 @@ public class Spider implements Solitaire {
                 }
                 aux.add(deck.getCard());
             }
+            aux.get(aux.size()-1).makeItVisible();
             tableau.add(i, aux);
         }
     }
 
+    @Override
+    public void getCards() {
+        if (deck.isEmpty()) {
+            return;
+        }
+        for ( ArrayList tabCol : tableau ) {
+            Card card = deck.getCard();
+            card.makeItVisible();
+            tabCol.add(card);
+        }
+    }
+
+    @Override
     public void move(int tableauCol, int idx, int dest) {
         int realCol = tableauCol-1;
         int realIdx = idx-1;
@@ -38,10 +52,12 @@ public class Spider implements Solitaire {
         }
     }
 
+    @Override
     public boolean validMove(int tableauCol, int idx, int tableauColDestination) {
         //Returns true or false in case the move is valid or not.
 
-        if (tableauCol >= tableau.size() || tableauColDestination >= tableau.size() || idx >= tableau.get(tableauCol).size() || !tableau.get(tableauCol).get(idx).isVisible()) {
+        if (tableauCol >= tableau.size() || tableauColDestination >= tableau.size() ||
+                idx >= tableau.get(tableauCol).size() || !tableau.get(tableauCol).get(idx).isVisible()) {
             return false;
         }
 

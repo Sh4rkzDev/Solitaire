@@ -9,9 +9,11 @@ class Card {
   - number
   - visible
   + getData()
+	+ makeItVisible()
 }
 
 interface Solitaire {
+	+ getCards()
   + validMove()
 	+ move()
   + victory()
@@ -20,6 +22,7 @@ interface Solitaire {
 class Deck {
   - cards
   + getCard()
+	+ isEmpty()
 }
 
 enum Suit {

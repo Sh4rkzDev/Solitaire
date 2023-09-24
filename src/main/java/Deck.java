@@ -42,7 +42,6 @@ public class Deck {
         return cards.isEmpty();
     }
     public Card getCard() {
-
         return cards.remove(cards.size()-1);
     }
 }
