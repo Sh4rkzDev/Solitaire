@@ -1,4 +1,4 @@
 public interface Solitaire {
-    boolean validAction();
+    boolean validMove(int tableauCol, int idx, int tableauColDestination);
     boolean victory();
 }

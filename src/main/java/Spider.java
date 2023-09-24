@@ -38,7 +38,7 @@ public class Spider implements Solitaire {
         }
     }
 
-    private boolean validMove(int tableauCol, int idx, int tableauColDestination) {
+    public boolean validMove(int tableauCol, int idx, int tableauColDestination) {
         //Returns true or false in case the move is valid or not.
 
         if (tableauCol >= tableau.size() || tableauColDestination >= tableau.size() || idx >= tableau.get(tableauCol).size() || !tableau.get(tableauCol).get(idx).isVisible()) {
@@ -85,10 +85,6 @@ public class Spider implements Solitaire {
         return Objects.equals(orderedDeck.indexOf(cardOrigin.getNum())-1, orderedDeck.indexOf(cardDestination.getNum()));
     }
 
-    @Override
-    public boolean validAction() {
-        return false;
-    }
 
     @Override
     public boolean victory() {

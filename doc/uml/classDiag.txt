@@ -12,7 +12,7 @@ class Card {
 }
 
 interface Solitaire {
-  - validMove()
+  + validMove()
 	+ move()
   + victory()
 }
