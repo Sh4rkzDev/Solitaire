@@ -27,67 +27,43 @@ public class Spider implements Solitaire {
         }
     }
 
-    public void move(int row, int col, int dest) {
-        //COMENTARIO GENERAL, PARA MI DEBERIAMOS PONER QUE ROW SEAN LAS FILAS Y COL LAS COLUMNAS, NO TIENE
-        //SENTIDO SINO HACER TABLEAU.GET(REALROW) CUANDO TABLEAU REPRESENTA COLUMNAS.
-        if (!validMove(row, col, dest)) { //LA FUNCION VALID MOVE USA LOS ROWS COMO FILAS (como debe ser) Y LA COL COMO COLUMNA.
+    public void move(int tableauCol, int idx, int dest) {
+        int realCol = tableauCol-1;
+        int realIdx = idx-1;
+        if (!validMove(realCol, idx, dest)) {
             return;
         }
-        int realRow = row-1;
-        int realCol = col-1;
-        while (tableau.get(realRow).size() != realCol) {
-            tableau.get(dest).add(tableau.get(realRow).remove(realCol));
+        while (tableau.get(realCol).size() != realIdx) {
+            tableau.get(dest).add(tableau.get(realCol).remove(realIdx));
         }
     }
 
-    public boolean validMove(int row, int col, int colDestination){
+    private boolean validMove(int tableauCol, int idx, int tableauColDestination) {
         //Returns true or false in case the move is valid or not.
 
-        if ( col<tableau.size() && colDestination<tableau.size() && row<tableau.get(col).size()) { //We verify that the given columns and row are valid.
-            int indexLastElementOrigin =  tableau.get(col).size()-1;
-            Card cardOrigin = tableau.get(col).get(row);
-            Card cardDestination;
-
-            //If we want to move a card or a slice of cards to an empty space the logic changes.
-            if (!tableau.get(colDestination).isEmpty()){
-                int indexLastElementDestination = tableau.get(colDestination).size()-1;
-                cardDestination = tableau.get(col).get(indexLastElementDestination);
-            }else {
-                Suit suit = Suit.CLUBS;
-                cardDestination = new Card(suit," ");    //Due to it is empty, we create an "empty" card
-                cardDestination.makeItVisible();
-            }
-
-            if (!cardOrigin.isVisible() && !cardDestination.isVisible()){
-                return false;
-            }
-
-            if (rightOrder(cardDestination,cardOrigin)){
-                //Once verified that the chosen card and the last card of the chosen column are in order
-                //we verify if the card chosen is only one card or if it's a slice of cards.
-                if (row < indexLastElementOrigin && validSlice(row,col,indexLastElementOrigin)){
-                    return true;
-                }
-
-                if (Objects.equals(row, indexLastElementOrigin)){
-                    return true;
-                }
-            }
+        if (tableauCol >= tableau.size() || tableauColDestination >= tableau.size() || idx >= tableau.get(tableauCol).size() || !tableau.get(tableauCol).get(idx).isVisible()) {
+            return false;
         }
-        return false;
+
+        Card cardOrigin = tableau.get(tableauCol).get(idx);
+        Card cardDestination = tableau.get(tableauColDestination).isEmpty() ? null : tableau.get(tableauColDestination).get(tableau.get(tableauColDestination).size() - 1);
+
+        if (!rightOrder(cardOrigin, cardDestination) || !validSlice(tableauCol, idx)) {
+            return false;
+        }
+        return true;
     }
 
-    public boolean validSlice(int row, int col, int indexLastElement){
+    private boolean validSlice(int tableauCol, int idx){
         //We verify if we can move the whole slice, in order to do that, we have to verify that it's
         //ordered and all from the same suit.
         Card card1;
         Card card2;
 
-        card1 = tableau.get(col).get(row);
-        for (int i=row+1; i <= indexLastElement; i++){
-            card2 = tableau.get(col).get(i);
-
-            if ( !Objects.equals(card1.getSuit(),card2.getSuit()) || !rightOrder(card1,card2) ){
+        card1 = tableau.get(tableauCol).get(idx);
+        for (int i = idx + 1; i < tableau.get(tableauCol).size() ; i++){
+            card2 = tableau.get(tableauCol).get(i);
+            if ( !Objects.equals(card1.getSuit(), card2.getSuit()) || !rightOrder(card1,card2)) {
                 return false;
             }
             card1 = card2;
@@ -96,10 +72,10 @@ public class Spider implements Solitaire {
         return true;
     }
 
-    public boolean rightOrder(Card cardOrigin, Card cardDestination){
+    private boolean rightOrder(Card cardOrigin, Card cardDestination){
         //Reminder: two cards are stackable even tho they are not from the same suit.
         //Reminder: we can stack any card above an empty space.
-        if (Objects.equals(cardDestination.getNum(), " ")){
+        if (cardDestination == null) {
             return true;
         }
 

@@ -38,7 +38,11 @@ public class Deck {
         }
     }
 
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
     public Card getCard() {
+
         return cards.remove(cards.size()-1);
     }
 }
