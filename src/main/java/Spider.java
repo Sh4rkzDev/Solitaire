@@ -44,12 +44,38 @@ public class Spider implements Solitaire {
     public void move(int tableauCol, int idx, int dest) {
         int realCol = tableauCol-1;
         int realIdx = idx-1;
-        if (!validMove(realCol, idx, dest)) {
+        if (!validMove(realCol, realIdx, dest)) {
             return;
         }
         while (tableau.get(realCol).size() != realIdx) {
             tableau.get(dest).add(tableau.get(realCol).remove(realIdx));
         }
+        if (!tableau.get(realCol).isEmpty()) {
+            tableau.get(realCol).get(realIdx-1).makeItVisible();
+        }
+        if (tableau.get(dest).size() >= 13) {
+            checkSequence(dest);
+        }
+    }
+
+    private void checkSequence(int dest) {
+        ArrayList<String> order = new ArrayList<>(
+                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6","5","4", "3","2", "A")
+        );
+        int idx = 12;
+        Suit suit = tableau.get(dest).get(idx).getSuit();
+        for (int i = tableau.get(dest).size()-1; i >= tableau.get(dest).size() - 13; i--) {
+            Card card = tableau.get(dest).get(i);
+            if (!card.getNum().equals(order.get(idx)) || card.getSuit() != suit) {
+                return;
+            }
+            idx--;
+        }
+        ArrayList<Card> stack = new ArrayList<>(13);
+        for (int i = 0; i < 13; i++) {
+            stack.add(tableau.get(dest).remove(tableau.get(dest).size()-1));
+        }
+        foundation.add(stack);
     }
 
     @Override
