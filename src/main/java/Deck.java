@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 public class Deck {
 
@@ -16,6 +17,14 @@ public class Deck {
             addCards(suits);
         }
         Collections.shuffle(cards);
+    }
+
+    public Deck(byte suits, byte decks, int seed) {
+        for (int nDecks = 0; nDecks < decks; nDecks++) {
+            addCards(suits);
+        }
+        Random sd = new Random(seed);
+        Collections.shuffle(cards, sd);
     }
 
     private void addCards(byte suits) {
