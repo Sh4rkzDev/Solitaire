@@ -15,6 +15,11 @@ public class SpiderTest {
     }
 
     @Test
+    public void testWonGame() {
+
+    }
+
+    @Test
     public void testRightOrder1Suit() {
         // We verify that two cards of the same suit and in right order can be stackable in Spider Solitaire
         var sp = new Spider((byte) 1);

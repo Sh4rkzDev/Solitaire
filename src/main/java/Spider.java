@@ -28,6 +28,26 @@ public class Spider implements Solitaire {
         }
     }
 
+    public Spider(byte suits, int seed) {
+        //We represent the Tableau at a particular state with a matrix made by two arrays, the tableau array and multiple aux arrays
+        //In each position of the tableau array we add an aux array, making the tableau positions the columns
+        //and the arrays innit (the aux arrays) the rows.
+        deck = new Deck(suits, (byte) 2, seed);
+        for (int i = 0; i < 10; i++) {
+            ArrayList<Card> aux = new ArrayList<>();
+            boolean extra = true;
+            for (int j = 0; j < 5; j++) {
+                if (extra && i < 4) {
+                    extra = false;
+                    aux.add(deck.getCard());
+                }
+                aux.add(deck.getCard());
+            }
+            aux.get(aux.size()-1).makeItVisible();
+            tableau.add(i, aux);
+        }
+    }
+
     @Override
     public void getCards() {
         if (deck.isEmpty()) {
