@@ -183,4 +183,18 @@ public class DeckTest extends TestCase {
         }
     }
 
+    @Test
+    public void testDeckWithSeed() {
+        Deck deck1 = new Deck((byte) 4, (byte) 2, 9);
+        Deck deck2 = new Deck((byte) 4, (byte) 2, 9);
+
+        while (!deck1.isEmpty()) {
+            Card card1 = deck1.getCard();
+            Card card2 = deck2.getCard();
+            assertEquals(card1.getNum(), card2.getNum());
+            assertEquals(card1.getSuit(), card2.getSuit());
+        }
+        assertTrue(deck1.isEmpty());
+        assertTrue(deck2.isEmpty());
+    }
 }
