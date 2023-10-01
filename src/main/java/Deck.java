@@ -9,20 +9,20 @@ public class Deck {
 
     public Deck(byte suits) {
         addCards(suits);
-        Collections.shuffle(cards);
     }
 
     public Deck(byte suits, byte decks) {
         for (int nDecks = 0; nDecks < decks; nDecks++) {
             addCards(suits);
         }
+    }
+
+
+    public void shuffle() {
         Collections.shuffle(cards);
     }
 
-    public Deck(byte suits, byte decks, int seed) {
-        for (int nDecks = 0; nDecks < decks; nDecks++) {
-            addCards(suits);
-        }
+    public void shuffle(int seed) {
         Random sd = new Random(seed);
         Collections.shuffle(cards, sd);
     }
@@ -50,7 +50,8 @@ public class Deck {
     public boolean isEmpty() {
         return cards.isEmpty();
     }
+
     public Card getCard() {
-        return cards.remove(cards.size()-1);
+        return cards.remove(cards.size() - 1);
     }
 }

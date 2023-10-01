@@ -185,8 +185,10 @@ public class DeckTest extends TestCase {
 
     @Test
     public void testDeckWithSeed() {
-        Deck deck1 = new Deck((byte) 4, (byte) 2, 9);
-        Deck deck2 = new Deck((byte) 4, (byte) 2, 9);
+        Deck deck1 = new Deck((byte) 4, (byte) 2);
+        Deck deck2 = new Deck((byte) 4, (byte) 2);
+        deck1.shuffle(5);
+        deck2.shuffle(5);
 
         while (!deck1.isEmpty()) {
             Card card1 = deck1.getCard();

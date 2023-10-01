@@ -23,7 +23,7 @@ public class Spider implements Solitaire {
                 }
                 aux.add(deck.getCard());
             }
-            aux.get(aux.size()-1).makeItVisible();
+            aux.get(aux.size() - 1).makeItVisible();
             tableau.add(i, aux);
         }
     }
@@ -32,7 +32,8 @@ public class Spider implements Solitaire {
         //We represent the Tableau at a particular state with a matrix made by two arrays, the tableau array and multiple aux arrays
         //In each position of the tableau array we add an aux array, making the tableau positions the columns
         //and the arrays innit (the aux arrays) the rows.
-        deck = new Deck(suits, (byte) 2, seed);
+        deck = new Deck(suits, (byte) 2);
+        deck.shuffle(seed);
         for (int i = 0; i < 10; i++) {
             ArrayList<Card> aux = new ArrayList<>();
             boolean extra = true;
@@ -43,7 +44,7 @@ public class Spider implements Solitaire {
                 }
                 aux.add(deck.getCard());
             }
-            aux.get(aux.size()-1).makeItVisible();
+            aux.get(aux.size() - 1).makeItVisible();
             tableau.add(i, aux);
         }
     }
@@ -53,7 +54,7 @@ public class Spider implements Solitaire {
         if (deck.isEmpty()) {
             return;
         }
-        for ( ArrayList tabCol : tableau ) {
+        for (ArrayList tabCol : tableau) {
             Card card = deck.getCard();
             card.makeItVisible();
             tabCol.add(card);
@@ -62,8 +63,8 @@ public class Spider implements Solitaire {
 
     @Override
     public void move(int tableauCol, int idx, int dest) {
-        int realCol = tableauCol-1;
-        int realIdx = idx-1;
+        int realCol = tableauCol - 1;
+        int realIdx = idx - 1;
         if (!validMove(realCol, realIdx, dest)) {
             return;
         }
@@ -71,7 +72,7 @@ public class Spider implements Solitaire {
             tableau.get(dest).add(tableau.get(realCol).remove(realIdx));
         }
         if (!tableau.get(realCol).isEmpty()) {
-            tableau.get(realCol).get(realIdx-1).makeItVisible();
+            tableau.get(realCol).get(realIdx - 1).makeItVisible();
         }
         if (tableau.get(dest).size() >= 13) {
             checkSequence(dest);
@@ -80,11 +81,11 @@ public class Spider implements Solitaire {
 
     private void checkSequence(int dest) {
         ArrayList<String> order = new ArrayList<>(
-                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6","5","4", "3","2", "A")
+                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
         );
         int idx = 12;
         Suit suit = tableau.get(dest).get(idx).getSuit();
-        for (int i = tableau.get(dest).size()-1; i >= tableau.get(dest).size() - 13; i--) {
+        for (int i = tableau.get(dest).size() - 1; i >= tableau.get(dest).size() - 13; i--) {
             Card card = tableau.get(dest).get(i);
             if (!card.getNum().equals(order.get(idx)) || card.getSuit() != suit) {
                 return;
@@ -93,7 +94,7 @@ public class Spider implements Solitaire {
         }
         ArrayList<Card> stack = new ArrayList<>(13);
         for (int i = 0; i < 13; i++) {
-            stack.add(tableau.get(dest).remove(tableau.get(dest).size()-1));
+            stack.add(tableau.get(dest).remove(tableau.get(dest).size() - 1));
         }
         foundation.add(stack);
     }
@@ -116,16 +117,16 @@ public class Spider implements Solitaire {
         return true;
     }
 
-    private boolean validSlice(int tableauCol, int idx){
+    private boolean validSlice(int tableauCol, int idx) {
         //We verify if we can move the whole slice, in order to do that, we have to verify that it's
         //ordered and all from the same suit.
         Card card1;
         Card card2;
 
         card1 = tableau.get(tableauCol).get(idx);
-        for (int i = idx + 1; i < tableau.get(tableauCol).size() ; i++){
+        for (int i = idx + 1; i < tableau.get(tableauCol).size(); i++) {
             card2 = tableau.get(tableauCol).get(i);
-            if ( !Objects.equals(card1.getSuit(), card2.getSuit()) || !rightOrder(card1,card2)) {
+            if (!Objects.equals(card1.getSuit(), card2.getSuit()) || !rightOrder(card1, card2)) {
                 return false;
             }
             card1 = card2;
@@ -134,7 +135,7 @@ public class Spider implements Solitaire {
         return true;
     }
 
-    private boolean rightOrder(Card cardOrigin, Card cardDestination){
+    private boolean rightOrder(Card cardOrigin, Card cardDestination) {
         //Reminder: two cards are stackable even tho they are not from the same suit.
         //Reminder: we can stack any card above an empty space.
         if (cardDestination == null) {
@@ -142,9 +143,9 @@ public class Spider implements Solitaire {
         }
 
         ArrayList<String> orderedDeck = new ArrayList<>(
-                Arrays.asList("K","Q","J","10","9","8","7","6","5","4","3","2","A")
+                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
         );
-        return Objects.equals(orderedDeck.indexOf(cardOrigin.getNum())-1, orderedDeck.indexOf(cardDestination.getNum()));
+        return Objects.equals(orderedDeck.indexOf(cardOrigin.getNum()) - 1, orderedDeck.indexOf(cardDestination.getNum()));
     }
 
 
