@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class Spider implements Solitaire {
 
@@ -14,19 +13,7 @@ public class Spider implements Solitaire {
         //and the arrays innit (the aux arrays) the rows.
         deck = new Deck(suits, (byte) 2);
         deck.shuffle();
-        for (int i = 0; i < 10; i++) {
-            ArrayList<Card> aux = new ArrayList<>();
-            boolean extra = true;
-            for (int j = 0; j < 5; j++) {
-                if (extra && i < 4) {
-                    extra = false;
-                    aux.add(deck.getCard());
-                }
-                aux.add(deck.getCard());
-            }
-            aux.get(aux.size() - 1).makeItVisible();
-            tableau.add(i, aux);
-        }
+        addCards();
     }
 
     public Spider(byte suits, int seed) {
@@ -35,6 +22,10 @@ public class Spider implements Solitaire {
         //and the arrays innit (the aux arrays) the rows.
         deck = new Deck(suits, (byte) 2);
         deck.shuffle(seed);
+        addCards();
+    }
+
+    private void addCards() {
         for (int i = 0; i < 10; i++) {
             ArrayList<Card> aux = new ArrayList<>();
             boolean extra = true;
@@ -57,13 +48,16 @@ public class Spider implements Solitaire {
     }
 
     @Override
-    public void getCards() {
+    public ArrayList<Card> getCards() {
+        ArrayList<Card> res = new ArrayList<>(10);
         for (ArrayList tabCol : tableau) {
-            if (deck.isEmpty()) return;
+            if (deck.isEmpty()) return res;
             Card card = deck.getCard();
             card.makeItVisible();
             tabCol.add(card);
+            res.add(card);
         }
+        return res;
     }
 
     @Override

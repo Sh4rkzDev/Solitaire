@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+
 public interface Solitaire {
-    void getCards();
+    ArrayList<Card> getCards();
 
     boolean move(int tableauCol, int idx, int tableauColDestination);
 
