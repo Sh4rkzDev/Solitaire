@@ -5,14 +5,15 @@ import java.util.Objects;
 public class Spider implements Solitaire {
 
     private Deck deck;
-    private final ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
-    private final ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
+    private ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
+    private ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
 
     public Spider(byte suits) {
         //We represent the Tableau with a matrix made by two arrays, the tableau array and multiple aux arrays
         //In each position of the tableau array we add an aux array, making the tableau positions the columns
         //and the arrays innit (the aux arrays) the rows.
         deck = new Deck(suits, (byte) 2);
+        deck.shuffle();
         for (int i = 0; i < 10; i++) {
             ArrayList<Card> aux = new ArrayList<>();
             boolean extra = true;
@@ -49,12 +50,16 @@ public class Spider implements Solitaire {
         }
     }
 
+    public Spider(Deck deck, ArrayList<ArrayList<Card>> tableau, ArrayList<ArrayList<Card>> foundation) {
+        this.deck = deck;
+        this.tableau = tableau;
+        this.foundation = foundation;
+    }
+
     @Override
     public void getCards() {
-        if (deck.isEmpty()) {
-            return;
-        }
         for (ArrayList tabCol : tableau) {
+            if (deck.isEmpty()) return;
             Card card = deck.getCard();
             card.makeItVisible();
             tabCol.add(card);
@@ -65,17 +70,18 @@ public class Spider implements Solitaire {
     public void move(int tableauCol, int idx, int dest) {
         int realCol = tableauCol - 1;
         int realIdx = idx - 1;
-        if (!validMove(realCol, realIdx, dest)) {
+        int realDest = dest - 1;
+        if (!validMove(realCol, realIdx, realDest)) {
             return;
         }
         while (tableau.get(realCol).size() != realIdx) {
-            tableau.get(dest).add(tableau.get(realCol).remove(realIdx));
+            tableau.get(realDest).add(tableau.get(realCol).remove(realIdx));
         }
         if (!tableau.get(realCol).isEmpty()) {
             tableau.get(realCol).get(realIdx - 1).makeItVisible();
         }
-        if (tableau.get(dest).size() >= 13) {
-            checkSequence(dest);
+        if (tableau.get(realDest).size() >= 13) {
+            checkSequence(realDest);
         }
     }
 

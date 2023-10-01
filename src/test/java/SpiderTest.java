@@ -16,7 +16,38 @@ public class SpiderTest {
 
     @Test
     public void testWonGame() {
-
+        ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
+        ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
+        Deck deck = new Deck((byte) 1, (byte) 2);
+        for (int j = 0; j < 7; j++) {
+            ArrayList<Card> stack = new ArrayList<>(13);
+            for (int i = 0; i < 13; i++) {
+                stack.add(deck.getCard());
+            }
+            foundation.add(stack);
+        }
+        ArrayList<Card> stack = new ArrayList<>(13);
+        for (int i = 0; i < 12; i++) {
+            Card card = deck.getCard();
+            card.makeItVisible();
+            stack.add(card);
+        }
+        tableau.add(stack);
+        ArrayList<Card> oneLeft = new ArrayList<>(1);
+        Card left = deck.getCard();
+        left.makeItVisible();
+        oneLeft.add(left);
+        assertTrue(deck.isEmpty());
+        assertTrue(foundation.size() == 7);
+        tableau.add(oneLeft);
+        for (int i = 0; i < 8; i++) {
+            ArrayList<Card> aux = new ArrayList<>();
+            tableau.add(aux);
+        }
+        assertTrue(tableau.size() == 10);
+        Spider sp = new Spider(deck, tableau, foundation);
+        sp.move(2, 1, 1);
+        assertTrue(sp.victory());
     }
 
     @Test
