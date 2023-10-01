@@ -46,52 +46,61 @@ public class SpiderTest {
         }
         assertTrue(tableau.size() == 10);
         Spider sp = new Spider(deck, tableau, foundation);
-        sp.move(2, 1, 1);
+        assertTrue(sp.move(2, 1, 1));
         assertTrue(sp.victory());
     }
 
     @Test
-    public void testRightOrder1Suit() {
-        // We verify that two cards of the same suit and in right order can be stackable in Spider Solitaire
-        var sp = new Spider((byte) 1);
-        ArrayList<String> orderedDeck = new ArrayList<>(
-                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"));
-        var cardOrigin = new Card(Suit.CLUBS, "Q");
-        var cardDest = new Card(Suit.CLUBS, "K");
+    public void testValidMoves() {
+        ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
+        ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
+        Deck deck = new Deck((byte) 1, (byte) 2);
 
-        for (int i = 2; i < orderedDeck.size(); i++) {
-            cardOrigin = new Card(Suit.CLUBS, orderedDeck.get(i));
-            cardDest = new Card(Suit.CLUBS, orderedDeck.get(i - 1));
+        for (int i = 0; i < 10; i++) {
+            ArrayList<Card> aux = new ArrayList<>();
+            Card card = deck.getCard();
+            card.makeItVisible();
+            aux.add(card);
+            if (i < 4) {
+                card = deck.getCard();
+                card.makeItVisible();
+                aux.add(card);
+            }
+            tableau.add(aux);
         }
 
-        cardOrigin = new Card(Suit.CLUBS, "K");
-        cardDest = new Card(Suit.CLUBS, "A");
-        cardOrigin = new Card(Suit.CLUBS, "J");
-        cardDest = new Card(Suit.CLUBS, "A");
+        Spider sp = new Spider(deck, tableau, foundation);
+        assertFalse(sp.move(1, 1, 6));
+        assertTrue(sp.move(9, 1, 8));
+        assertTrue(sp.move(1, 1, 9));
+        for (int i = 8; i > 1; i--) {
+            assertTrue(sp.move(i, 1, i - 1));
+        }
+        assertFalse(sp.move(10, 1, 30));
+        assertFalse(sp.move(11, 1, 1));
+        assertFalse(sp.move(1, 1, 10));
+        assertTrue(sp.move(1, 1, 9));
     }
 
     @Test
-    public void testRightOrder2Suits() {
-        // We verify that two cards of different suits and in right order can be stackable in Spider Solitaire
-        var sp = new Spider((byte) 2);
-        ArrayList<String> orderedDeck = new ArrayList<>(
-                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"));
-        var cardOrigin = new Card(Suit.CLUBS, "Q");
-        var cardDest = new Card(Suit.DIAMONDS, "K");
+    public void testInvalidMoves() {
+        ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
+        ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
+        Deck deck = new Deck((byte) 1, (byte) 2);
 
-        for (int i = 2; i < orderedDeck.size(); i++) {
-
-            cardOrigin = new Card(Suit.DIAMONDS, cardOrigin.getNum());
-            cardDest = new Card(Suit.CLUBS, cardDest.getNum());
-
-            cardOrigin = new Card(Suit.CLUBS, orderedDeck.get(i));
-            cardDest = new Card(Suit.DIAMONDS, orderedDeck.get(i - 1));
+        for (int i = 0; i < 10; i++) {
+            ArrayList<Card> aux = new ArrayList<>();
+            Card card = deck.getCard();
+            card.makeItVisible();
+            aux.add(card);
+            if (i < 4) {
+                card = deck.getCard();
+                card.makeItVisible();
+                aux.add(card);
+            }
+            tableau.add(aux);
         }
 
-        cardOrigin = new Card(Suit.CLUBS, "K");
-        cardDest = new Card(Suit.DIAMONDS, "K");
-        cardOrigin = new Card(Suit.DIAMONDS, "7");
-        cardDest = new Card(Suit.CLUBS, "A");
+        Spider sp = new Spider(deck, tableau, foundation);
     }
-
 }

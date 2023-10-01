@@ -67,12 +67,12 @@ public class Spider implements Solitaire {
     }
 
     @Override
-    public void move(int tableauCol, int idx, int dest) {
+    public boolean move(int tableauCol, int idx, int dest) {
         int realCol = tableauCol - 1;
         int realIdx = idx - 1;
         int realDest = dest - 1;
         if (!validMove(realCol, realIdx, realDest)) {
-            return;
+            return false;
         }
         while (tableau.get(realCol).size() != realIdx) {
             tableau.get(realDest).add(tableau.get(realCol).remove(realIdx));
@@ -83,6 +83,7 @@ public class Spider implements Solitaire {
         if (tableau.get(realDest).size() >= 13) {
             checkSequence(realDest);
         }
+        return true;
     }
 
     private void checkSequence(int dest) {
@@ -132,7 +133,7 @@ public class Spider implements Solitaire {
         card1 = tableau.get(tableauCol).get(idx);
         for (int i = idx + 1; i < tableau.get(tableauCol).size(); i++) {
             card2 = tableau.get(tableauCol).get(i);
-            if (!Objects.equals(card1.getSuit(), card2.getSuit()) || !rightOrder(card1, card2)) {
+            if (card1.getSuit() != card2.getSuit() || !rightOrder(card2, card1)) {
                 return false;
             }
             card1 = card2;
@@ -147,11 +148,12 @@ public class Spider implements Solitaire {
         if (cardDestination == null) {
             return true;
         }
+        if (cardOrigin.getNum().equals("K")) return false;
 
         ArrayList<String> orderedDeck = new ArrayList<>(
                 Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
         );
-        return Objects.equals(orderedDeck.indexOf(cardOrigin.getNum()) - 1, orderedDeck.indexOf(cardDestination.getNum()));
+        return cardDestination.getNum().equals(orderedDeck.get(orderedDeck.indexOf(cardOrigin.getNum()) - 1));
     }
 
 
