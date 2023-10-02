@@ -9,6 +9,7 @@ class Card {
   - number
   - visible
   + getData()
+  + isVisible()
 	+ makeItVisible()
 }
 
@@ -23,6 +24,7 @@ class Deck {
   - cards
   + getCard()
 	+ isEmpty()
+	+ shuffle()
 }
 
 enum Suit {
