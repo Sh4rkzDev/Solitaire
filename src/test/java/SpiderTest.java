@@ -1,7 +1,6 @@
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -38,13 +37,13 @@ public class SpiderTest {
         left.makeItVisible();
         oneLeft.add(left);
         assertTrue(deck.isEmpty());
-        assertTrue(foundation.size() == 7);
+        assertEquals(7, foundation.size());
         tableau.add(oneLeft);
         for (int i = 0; i < 8; i++) {
             ArrayList<Card> aux = new ArrayList<>();
             tableau.add(aux);
         }
-        assertTrue(tableau.size() == 10);
+        assertEquals(10, tableau.size());
         Spider sp = new Spider(deck, tableau, foundation);
         assertTrue(sp.move(2, 1, 1));
         assertTrue(sp.victory());

@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Spider implements Solitaire {
 
-    private Deck deck;
+    private final Deck deck;
     private ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
     private ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
 
@@ -50,7 +50,7 @@ public class Spider implements Solitaire {
     @Override
     public ArrayList<Card> getCards() {
         ArrayList<Card> res = new ArrayList<>(10);
-        for (ArrayList tabCol : tableau) {
+        for (ArrayList<Card> tabCol : tableau) {
             if (deck.isEmpty()) return res;
             Card card = deck.getCard();
             card.makeItVisible();
@@ -112,10 +112,7 @@ public class Spider implements Solitaire {
         Card cardOrigin = tableau.get(tableauCol).get(idx);
         Card cardDestination = tableau.get(tableauColDestination).isEmpty() ? null : tableau.get(tableauColDestination).get(tableau.get(tableauColDestination).size() - 1);
 
-        if (!rightOrder(cardOrigin, cardDestination) || !validSlice(tableauCol, idx)) {
-            return false;
-        }
-        return true;
+        return rightOrder(cardOrigin, cardDestination) && validSlice(tableauCol, idx);
     }
 
     private boolean validSlice(int tableauCol, int idx) {
