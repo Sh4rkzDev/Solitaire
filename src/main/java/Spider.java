@@ -3,9 +3,10 @@ import java.util.Arrays;
 
 public class Spider implements Solitaire {
 
+    private final int tableauCols = 10;
     private final Deck deck;
-    private ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
-    private ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
+    private Foundation foundation = new Foundation(8);
+    private Tableau tableau = new Tableau(tableauCols);
 
     public Spider(byte suits) {
         //We represent the Tableau with a matrix made by two arrays, the tableau array and multiple aux arrays
@@ -26,22 +27,21 @@ public class Spider implements Solitaire {
     }
 
     private void addCards() {
-        for (int i = 0; i < 10; i++) {
-            ArrayList<Card> aux = new ArrayList<>();
-            boolean extra = true;
+        for (int i = 0; i < tableauCols; i++) {
+            Card top = null;
             for (int j = 0; j < 5; j++) {
-                if (extra && i < 4) {
-                    extra = false;
-                    aux.add(deck.getCard());
-                }
-                aux.add(deck.getCard());
+                top = deck.getCard();
+                tableau.addCard(top, i);
             }
-            aux.get(aux.size() - 1).makeItVisible();
-            tableau.add(i, aux);
+            if (i < 4) {
+                top = deck.getCard();
+                tableau.addCard(top, i);
+            }
+            top.makeItVisible();
         }
     }
 
-    public Spider(Deck deck, ArrayList<ArrayList<Card>> tableau, ArrayList<ArrayList<Card>> foundation) {
+    public Spider(Deck deck, Tableau tableau, Foundation foundation) {
         this.deck = deck;
         this.tableau = tableau;
         this.foundation = foundation;
@@ -49,88 +49,45 @@ public class Spider implements Solitaire {
 
     @Override
     public ArrayList<Card> getCards() {
-        ArrayList<Card> res = new ArrayList<>(10);
-        for (ArrayList<Card> tabCol : tableau) {
+        ArrayList<Card> res = new ArrayList<>(tableauCols);
+        for (int i = 0; i < tableauCols; i++) {
             if (deck.isEmpty()) return res;
             Card card = deck.getCard();
             card.makeItVisible();
-            tabCol.add(card);
+            tableau.addCard(card, i);
             res.add(card);
         }
         return res;
     }
 
     @Override
-    public boolean move(int tableauCol, int idx, int dest) {
-        int realCol = tableauCol - 1;
+    public boolean move(int col, int idx, int dest) {
+        int realCol = col - 1;
         int realIdx = idx - 1;
         int realDest = dest - 1;
         if (!validMove(realCol, realIdx, realDest)) {
             return false;
         }
-        while (tableau.get(realCol).size() != realIdx) {
-            tableau.get(realDest).add(tableau.get(realCol).remove(realIdx));
-        }
-        if (!tableau.get(realCol).isEmpty()) {
-            tableau.get(realCol).get(realIdx - 1).makeItVisible();
-        }
-        if (tableau.get(realDest).size() >= 13) {
+        tableau.move(realCol, realIdx, realDest);
+        if (tableau.colSize(realDest) >= 13) {
             checkSequence(realDest);
         }
         return true;
     }
 
-    private void checkSequence(int dest) {
-        ArrayList<String> order = new ArrayList<>(
-                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
-        );
-        int idx = 12;
-        Suit suit = tableau.get(dest).get(idx).getSuit();
-        for (int i = tableau.get(dest).size() - 1; i >= tableau.get(dest).size() - 13; i--) {
-            Card card = tableau.get(dest).get(i);
-            if (!card.getNum().equals(order.get(idx)) || card.getSuit() != suit) {
-                return;
-            }
-            idx--;
-        }
-        ArrayList<Card> stack = new ArrayList<>(13);
-        for (int i = 0; i < 13; i++) {
-            stack.add(tableau.get(dest).remove(tableau.get(dest).size() - 1));
-        }
-        foundation.add(stack);
-    }
-
     @Override
-    public boolean validMove(int tableauCol, int idx, int tableauColDestination) {
+    public boolean validMove(int col, int idx, int dest) {
         //Returns true or false in case the move is valid or not.
 
-        if (tableauCol >= tableau.size() || tableauColDestination >= tableau.size() ||
-                idx >= tableau.get(tableauCol).size() || !tableau.get(tableauCol).get(idx).isVisible()) {
+        if (col >= tableauCols || dest >= tableauCols ||
+                idx >= tableau.colSize(col) || !tableau.getCard(col, idx).isVisible()) {
             return false;
         }
 
-        Card cardOrigin = tableau.get(tableauCol).get(idx);
-        Card cardDestination = tableau.get(tableauColDestination).isEmpty() ? null : tableau.get(tableauColDestination).get(tableau.get(tableauColDestination).size() - 1);
+        Card cardOrigin = tableau.getCard(col, idx);
+        Card cardDestination = tableau.colSize(dest) == 0 ? null : tableau.getCard(dest);
 
-        return rightOrder(cardOrigin, cardDestination) && validSlice(tableauCol, idx);
-    }
-
-    private boolean validSlice(int tableauCol, int idx) {
-        //We verify if we can move the whole slice, in order to do that, we have to verify that it's
-        //ordered and all from the same suit.
-        Card card1;
-        Card card2;
-
-        card1 = tableau.get(tableauCol).get(idx);
-        for (int i = idx + 1; i < tableau.get(tableauCol).size(); i++) {
-            card2 = tableau.get(tableauCol).get(i);
-            if (card1.getSuit() != card2.getSuit() || !rightOrder(card2, card1)) {
-                return false;
-            }
-            card1 = card2;
-        }
-
-        return true;
+        return rightOrder(cardOrigin, cardDestination) && validSlice(col, idx);
     }
 
     private boolean rightOrder(Card cardOrigin, Card cardDestination) {
@@ -147,6 +104,40 @@ public class Spider implements Solitaire {
         return cardDestination.getNum().equals(orderedDeck.get(orderedDeck.indexOf(cardOrigin.getNum()) - 1));
     }
 
+    private boolean validSlice(int col, int idx) {
+        //We verify if we can move the whole slice, in order to do that, we have to verify that it's
+        //ordered and all from the same suit.
+        Card card1;
+        Card card2;
+
+        card1 = tableau.getCard(col, idx);
+        for (int i = idx + 1; i < tableau.colSize(col); i++) {
+            card2 = tableau.getCard(col, i);
+            if (card1.getSuit() != card2.getSuit() || !rightOrder(card2, card1)) {
+                return false;
+            }
+            card1 = card2;
+        }
+
+        return true;
+    }
+
+    private void checkSequence(int dest) {
+        ArrayList<String> order = new ArrayList<>(
+                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
+        );
+        int idx = 12;
+        Suit suit = tableau.getCard(dest).getSuit();
+        for (int i = tableau.colSize(dest) - 1; i >= tableau.colSize(dest) - 13; i--) {
+            Card card = tableau.getCard(dest, i);
+            if (!card.getNum().equals(order.get(idx)) || card.getSuit() != suit) {
+                return;
+            }
+            idx--;
+        }
+        ArrayList<Card> stack = tableau.removeCards(dest, tableau.colSize(dest) - 13);
+        foundation.addStack(stack);
+    }
 
     @Override
     public boolean victory() {

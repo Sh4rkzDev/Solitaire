@@ -15,35 +15,26 @@ public class SpiderTest {
 
     @Test
     public void testWonGame() {
-        ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
-        ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
+        Tableau tableau = new Tableau(10);
+        Foundation foundation = new Foundation(8);
         Deck deck = new Deck((byte) 1, (byte) 2);
         for (int j = 0; j < 7; j++) {
             ArrayList<Card> stack = new ArrayList<>(13);
             for (int i = 0; i < 13; i++) {
                 stack.add(deck.getCard());
             }
-            foundation.add(stack);
+            foundation.addStack(stack);
         }
-        ArrayList<Card> stack = new ArrayList<>(13);
         for (int i = 0; i < 12; i++) {
             Card card = deck.getCard();
             card.makeItVisible();
-            stack.add(card);
+            tableau.addCard(card, 0);
         }
-        tableau.add(stack);
-        ArrayList<Card> oneLeft = new ArrayList<>(1);
         Card left = deck.getCard();
         left.makeItVisible();
-        oneLeft.add(left);
+        tableau.addCard(left, 1);
         assertTrue(deck.isEmpty());
         assertEquals(7, foundation.size());
-        tableau.add(oneLeft);
-        for (int i = 0; i < 8; i++) {
-            ArrayList<Card> aux = new ArrayList<>();
-            tableau.add(aux);
-        }
-        assertEquals(10, tableau.size());
         Spider sp = new Spider(deck, tableau, foundation);
         assertTrue(sp.move(2, 1, 1));
         assertTrue(sp.victory());
@@ -51,21 +42,19 @@ public class SpiderTest {
 
     @Test
     public void testValidMovesOneSuit() {
-        ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
-        ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
+        Tableau tableau = new Tableau(10);
+        Foundation foundation = new Foundation(8);
         Deck deck = new Deck((byte) 1, (byte) 2);
 
         for (int i = 0; i < 10; i++) {
-            ArrayList<Card> aux = new ArrayList<>();
             Card card = deck.getCard();
             card.makeItVisible();
-            aux.add(card);
+            tableau.addCard(card, i);
             if (i < 4) {
                 card = deck.getCard();
                 card.makeItVisible();
-                aux.add(card);
+                tableau.addCard(card, i);
             }
-            tableau.add(aux);
         }
 
         Spider sp = new Spider(deck, tableau, foundation);
@@ -79,21 +68,19 @@ public class SpiderTest {
 
     @Test
     public void testInvalidMovesOneSuit() {
-        ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
-        ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
+        Tableau tableau = new Tableau(10);
+        Foundation foundation = new Foundation(8);
         Deck deck = new Deck((byte) 1, (byte) 2);
 
         for (int i = 0; i < 10; i++) {
-            ArrayList<Card> aux = new ArrayList<>();
             Card card = deck.getCard();
             card.makeItVisible();
-            aux.add(card);
+            tableau.addCard(card, i);
             if (i < 4) {
                 card = deck.getCard();
                 card.makeItVisible();
-                aux.add(card);
+                tableau.addCard(card, i);
             }
-            tableau.add(aux);
         }
 
         Spider sp = new Spider(deck, tableau, foundation);
@@ -106,23 +93,21 @@ public class SpiderTest {
 
     @Test
     public void testMovesTwoSuits() {
-        ArrayList<ArrayList<Card>> tableau = new ArrayList<>(10);
-        ArrayList<ArrayList<Card>> foundation = new ArrayList<>(8);
+        Tableau tableau = new Tableau(10);
+        Foundation foundation = new Foundation(8);
         Deck deck = new Deck((byte) 2, (byte) 2);
 
         for (int i = 0; i < 10; i++) {
-            ArrayList<Card> aux = new ArrayList<>();
             for (int j = 0; j < 6; j++) {
                 Card card = deck.getCard();
                 card.makeItVisible();
-                aux.add(card);
+                tableau.addCard(card, i);
             }
             if ((i - 1) % 2 == 0) {
                 Card card = deck.getCard();
                 card.makeItVisible();
-                aux.add(card);
+                tableau.addCard(card, i);
             }
-            tableau.add(aux);
         }
 
         Spider sp = new Spider(deck, tableau, foundation);

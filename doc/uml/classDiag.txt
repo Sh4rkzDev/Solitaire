@@ -4,6 +4,12 @@ skin rose
 
 title Solitaire - Class Diagram
 
+enum Suit {
+  hearts
+  clubs
+  diamonds
+  spades
+}
 
 class Card {
   - number
@@ -13,13 +19,6 @@ class Card {
 	+ makeItVisible()
 }
 
-interface Solitaire {
-	+ getCards()
-  + validMove()
-	+ move()
-  + victory()
-}
-
 class Deck {
   - cards
   + getCard()
@@ -27,11 +26,31 @@ class Deck {
 	+ shuffle()
 }
 
-enum Suit {
-  hearts
-  clubs
-  diamonds
-  spades
+interface Solitaire {
+	+ getCards()
+  + validMove()
+	+ move()
+  + victory()
+}
+
+class Column {
+  + addCard()
+  + getCard()
+  + removeCards()
+  + size()
+}
+
+class Tableau {
+  + addCard()
+  + move()
+  + colSize()
+  + getCard()
+  + removeCards()
+}
+
+class Foundation {
+  + addStack()
+  + size()
 }
 
 class Solitaire1 {
@@ -42,9 +61,13 @@ class Solitaire2 {
   - rules
 }
 
-Solitaire "*" .up.> "1" Deck: Dependency
+
 Deck "1" *-up- "*" Card: Composition
 Card  ->  Suit
+Solitaire "*" *-up- "1" Deck: Composition
+Solitaire *-- Tableau: Composition
+Solitaire *-- Foundation: Composition
+Tableau "1" *-left- "*" Column: Composition
 Solitaire1 ..right|> Solitaire: Implements
 Solitaire2 ..left|> Solitaire: Implements
 
