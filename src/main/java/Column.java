@@ -18,6 +18,12 @@ public class Column {
         return col.get(idx);
     }
 
+    /**
+     * It removes the cards from the given index to the last one.
+     *
+     * @param idx The index to remove cards from.
+     * @return It returns an ArrayList with the cards from the given index to the end of the Column, respecting the order they have.
+     */
     public ArrayList<Card> removeCards(int idx) {
         ArrayList<Card> res = new ArrayList<>();
         while (col.size() != idx) {

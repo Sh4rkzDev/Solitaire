@@ -27,6 +27,9 @@ public class Deck {
         Collections.shuffle(cards, sd);
     }
 
+    /**
+     * @param suits Add the number of cards according to the number of suits. I.e: if the number of suits is 2, there will be 26 cards of one suit, and 26 of another suit.
+     */
     private void addCards(byte suits) {
         ArrayList<String> numbers = new ArrayList<>(
                 Arrays.asList("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")

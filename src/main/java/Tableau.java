@@ -10,10 +10,23 @@ public class Tableau {
         }
     }
 
+    /**
+     * Add the given card to the given column
+     *
+     * @param card The card to be added.
+     * @param col  The column where the card will be added.
+     */
     public void addCard(Card card, int col) {
         tableau.get(col).addCard(card);
     }
 
+    /**
+     * It removes the cards from the given column and put them to destination column.
+     *
+     * @param col  The origin column where the cards will be extracted.
+     * @param idx  The index from the Column where the cards will be extracted to the end.
+     * @param dest The column where the extracted cards will be placed.
+     */
     public void move(int col, int idx, int dest) {
         ArrayList<Card> stack = removeCards(col, idx);
         tableau.get(dest).addCard(stack);
