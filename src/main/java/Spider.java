@@ -14,9 +14,6 @@ public class Spider implements Solitaire {
      * @param suits The number of suits to be played.
      */
     public Spider(byte suits) {
-        //We represent the Tableau with a matrix made by two arrays, the tableau array and multiple aux arrays
-        //In each position of the tableau array we add an aux array, making the tableau positions the columns
-        //and the arrays innit (the aux arrays) the rows.
         deck = new Deck(suits, (byte) 2);
         deck.shuffle();
         addCards();
@@ -29,9 +26,6 @@ public class Spider implements Solitaire {
      * @param seed  It can take a seed to generate a specific game scenario
      */
     public Spider(byte suits, int seed) {
-        //We represent the Tableau at a particular state with a matrix made by two arrays, the tableau array and multiple aux arrays
-        //In each position of the tableau array we add an aux array, making the tableau positions the columns
-        //and the arrays innit (the aux arrays) the rows.
         deck = new Deck(suits, (byte) 2);
         deck.shuffle(seed);
         addCards();
@@ -154,8 +148,6 @@ public class Spider implements Solitaire {
      * @return Returns true in case that it is valid. False otherwise.
      */
     private boolean validSlice(int col, int idx) {
-        //We verify if we can move the whole slice, in order to do that, we have to verify that it's
-        //ordered and all from the same suit.
         Card card1;
         Card card2;
 
