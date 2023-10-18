@@ -1,12 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Spider implements Solitaire {
-
-    private final int tableauCols = 10;
-    private final Deck deck;
-    private Foundation foundation = new Foundation(8);
-    private Tableau tableau = new Tableau(tableauCols);
+public class Spider extends Solitaire {
 
     /**
      * Constructor of the Spider Solitaire Game.
@@ -14,9 +9,7 @@ public class Spider implements Solitaire {
      * @param suits The number of suits to be played.
      */
     public Spider(byte suits) {
-        deck = new Deck(suits, (byte) 2);
-        deck.shuffle();
-        addCards();
+        super(suits, (byte) 2, (byte) 10, (byte) 8);
     }
 
     /**
@@ -26,9 +19,7 @@ public class Spider implements Solitaire {
      * @param seed  It can take a seed to generate a specific game scenario
      */
     public Spider(byte suits, int seed) {
-        deck = new Deck(suits, (byte) 2);
-        deck.shuffle(seed);
-        addCards();
+        super(suits, (byte) 2, (byte) 10, (byte) 8, seed);
     }
 
     /**
@@ -36,7 +27,8 @@ public class Spider implements Solitaire {
      * The first 4 columns have one more card than the others.
      * The card lying on the top of the column is set visible.
      */
-    private void addCards() {
+    @Override
+    protected void addCards() {
         for (int i = 0; i < tableauCols; i++) {
             Card top = null;
             for (int j = 0; j < 5; j++) {
@@ -59,9 +51,7 @@ public class Spider implements Solitaire {
      * @param foundation Specific Foundation to be passed.
      */
     public Spider(Deck deck, Tableau tableau, Foundation foundation) {
-        this.deck = deck;
-        this.tableau = tableau;
-        this.foundation = foundation;
+        super(deck, tableau, foundation, (byte) 10);
     }
 
     /**
@@ -106,7 +96,7 @@ public class Spider implements Solitaire {
     }
 
     @Override
-    public boolean validMove(int col, int idx, int dest) {
+    protected boolean validMove(int col, int idx, int dest) {
         if (col >= tableauCols || dest >= tableauCols ||
                 idx >= tableau.colSize(col) || !tableau.getCard(col, idx).isVisible()) {
             return false;
@@ -186,7 +176,7 @@ public class Spider implements Solitaire {
     }
 
     @Override
-    public boolean victory() {
+    protected boolean victory() {
         return foundation.size() == 8;
     }
 }
