@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Spider extends Solitaire {
 
@@ -32,11 +31,11 @@ public class Spider extends Solitaire {
         for (int i = 0; i < tableauCols; i++) {
             Card top = null;
             for (int j = 0; j < 5; j++) {
-                top = deck.getCard();
+                top = deck.removeCard();
                 tableau.addCard(top, i);
             }
             if (i < 4) {
-                top = deck.getCard();
+                top = deck.removeCard();
                 tableau.addCard(top, i);
             }
             top.makeItVisible();
@@ -64,7 +63,7 @@ public class Spider extends Solitaire {
         ArrayList<Card> res = new ArrayList<>(tableauCols);
         for (int i = 0; i < tableauCols; i++) {
             if (deck.isEmpty()) return res;
-            Card card = deck.getCard();
+            Card card = deck.removeCard();
             card.makeItVisible();
             tableau.addCard(card, i);
             res.add(card);

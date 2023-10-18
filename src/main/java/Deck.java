@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Deck {
 
-    private final ArrayList<Card> cards = new ArrayList<>();
+    protected ArrayList<Card> cards = new ArrayList<>(52);
 
     public Deck(byte suits) {
         addCards(suits);
@@ -17,6 +17,9 @@ public class Deck {
         }
     }
 
+    public Deck(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
 
     public void shuffle() {
         Collections.shuffle(cards);
@@ -54,7 +57,7 @@ public class Deck {
         return cards.isEmpty();
     }
 
-    public Card getCard() {
+    public Card removeCard() {
         return cards.remove(cards.size() - 1);
     }
 }

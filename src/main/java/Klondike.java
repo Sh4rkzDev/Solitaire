@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Klondike extends Solitaire {
 
     protected KFoundation foundation;
-    private Waste waste = new Waste();
+    private final Waste waste = new Waste();
     private byte reDeals;
 
     /**
@@ -35,7 +34,7 @@ public class Klondike extends Solitaire {
         for (int i = 0; i < tableauCols; i++) {
             Card top = null;
             for (int j = 0; j < i + 1; j++) {
-                top = deck.getCard();
+                top = deck.removeCard();
                 tableau.addCard(top, i);
             }
             top.makeItVisible();
@@ -55,8 +54,14 @@ public class Klondike extends Solitaire {
 
     @Override
     public ArrayList<Card> getCards() {
-        ArrayList res = new ArrayList<>();
-        Card card = deck.getCard();
+        ArrayList<Card> res = new ArrayList<>();
+        if (deck.isEmpty()) {
+            if (reDeals == 0) return res;
+            deck = waste.toDeck();
+            reDeals--;
+        }
+        Card card = deck.removeCard();
+        card.makeItVisible();
         waste.addCard(card);
         res.add(card);
         return res;

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
-
 public class DeckTest extends TestCase {
 
     @Test
@@ -17,7 +15,7 @@ public class DeckTest extends TestCase {
         Card card;
 
         while (!deck.isEmpty()) {
-            card = deck.getCard();
+            card = deck.removeCard();
             String key = card.getNum();
             if (dict.containsKey(key)) {
                 dict.replace(key, dict.get(key) + 1);
@@ -46,7 +44,7 @@ public class DeckTest extends TestCase {
         Card card;
 
         while (!deck.isEmpty()) {
-            card = deck.getCard();
+            card = deck.removeCard();
             String key = card.getNum();
             Suit suit = card.getSuit();
             switch (suit) {
@@ -98,7 +96,7 @@ public class DeckTest extends TestCase {
         Card card;
 
         while (!deck.isEmpty()) {
-            card = deck.getCard();
+            card = deck.removeCard();
             String key = card.getNum();
             Suit suit = card.getSuit();
             switch (suit) {
@@ -163,7 +161,7 @@ public class DeckTest extends TestCase {
         Card card;
 
         while (!deck.isEmpty()) {
-            card = deck.getCard();
+            card = deck.removeCard();
             String key = card.getNum();
             if (dict.containsKey(key)) {
                 dict.replace(key, dict.get(key) + 1);
@@ -190,8 +188,8 @@ public class DeckTest extends TestCase {
         deck2.shuffle(5);
 
         while (!deck1.isEmpty()) {
-            Card card1 = deck1.getCard();
-            Card card2 = deck2.getCard();
+            Card card1 = deck1.removeCard();
+            Card card2 = deck2.removeCard();
             assertEquals(card1.getNum(), card2.getNum());
             assertEquals(card1.getSuit(), card2.getSuit());
         }

@@ -21,16 +21,16 @@ public class SpiderTest {
         for (int j = 0; j < 7; j++) {
             ArrayList<Card> stack = new ArrayList<>(13);
             for (int i = 0; i < 13; i++) {
-                stack.add(deck.getCard());
+                stack.add(deck.removeCard());
             }
             foundation.addStack(stack);
         }
         for (int i = 0; i < 12; i++) {
-            Card card = deck.getCard();
+            Card card = deck.removeCard();
             card.makeItVisible();
             tableau.addCard(card, 0);
         }
-        Card left = deck.getCard();
+        Card left = deck.removeCard();
         left.makeItVisible();
         tableau.addCard(left, 1);
         assertTrue(deck.isEmpty());
@@ -47,11 +47,11 @@ public class SpiderTest {
         Deck deck = new Deck((byte) 1, (byte) 2);
 
         for (int i = 0; i < 10; i++) {
-            Card card = deck.getCard();
+            Card card = deck.removeCard();
             card.makeItVisible();
             tableau.addCard(card, i);
             if (i < 4) {
-                card = deck.getCard();
+                card = deck.removeCard();
                 card.makeItVisible();
                 tableau.addCard(card, i);
             }
@@ -73,11 +73,11 @@ public class SpiderTest {
         Deck deck = new Deck((byte) 1, (byte) 2);
 
         for (int i = 0; i < 10; i++) {
-            Card card = deck.getCard();
+            Card card = deck.removeCard();
             card.makeItVisible();
             tableau.addCard(card, i);
             if (i < 4) {
-                card = deck.getCard();
+                card = deck.removeCard();
                 card.makeItVisible();
                 tableau.addCard(card, i);
             }
@@ -99,12 +99,12 @@ public class SpiderTest {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 6; j++) {
-                Card card = deck.getCard();
+                Card card = deck.removeCard();
                 card.makeItVisible();
                 tableau.addCard(card, i);
             }
             if ((i - 1) % 2 == 0) {
-                Card card = deck.getCard();
+                Card card = deck.removeCard();
                 card.makeItVisible();
                 tableau.addCard(card, i);
             }

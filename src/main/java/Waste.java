@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Waste {
 
@@ -18,5 +19,12 @@ public class Waste {
 
     public Card removeCard() {
         return waste.remove(waste.size() - 1);
+    }
+
+    public Deck toDeck() {
+        Collections.reverse(waste);
+        Deck res = new Deck(waste);
+        waste = new ArrayList<>();
+        return res;
     }
 }
