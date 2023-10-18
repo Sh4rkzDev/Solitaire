@@ -44,7 +44,7 @@ public class Spider extends Solitaire {
     }
 
     /**
-     * Constructor used for testing purpose only
+     * Constructor used for testing purpose only.
      *
      * @param deck       Specific Deck to be passed.
      * @param tableau    Specific Tableau to be passed.
@@ -85,47 +85,27 @@ public class Spider extends Solitaire {
         int realCol = col - 1;
         int realIdx = idx - 1;
         int realDest = dest - 1;
-        if (!validMove(realCol, realIdx, realDest)) {
-            return false;
-        }
+        if (!validMove(realCol, realIdx, realDest)) return false;
         tableau.move(realCol, realIdx, realDest);
-        if (tableau.colSize(realDest) >= 13) {
-            checkSequence(realDest);
-        }
+        if (tableau.colSize(realDest) >= 13) checkSequence(realDest);
         return true;
-    }
-
-    @Override
-    protected boolean validMove(int col, int idx, int dest) {
-        if (col >= tableauCols || dest >= tableauCols ||
-                idx >= tableau.colSize(col) || !tableau.getCard(col, idx).isVisible()) {
-            return false;
-        }
-
-        Card cardOrigin = tableau.getCard(col, idx);
-        Card cardDestination = tableau.colSize(dest) == 0 ? null : tableau.getCard(dest);
-
-        return rightOrder(cardOrigin, cardDestination) && validSlice(col, idx);
     }
 
     /**
      * Verify that the given cards are in the correct order.
+     * <p>
      * Reminder: two cards are stackable even tho they are not from the same suit.
+     * <p>
      * Reminder: we can stack any card above an empty space.
      *
      * @param cardOrigin      The card that is supposed to be on top of the another.
      * @param cardDestination The card that is supposed to be under the another.
      * @return Returns true if it is correct. False otherwise.
      */
-    private boolean rightOrder(Card cardOrigin, Card cardDestination) {
-        if (cardDestination == null) {
-            return true;
-        }
+    @Override
+    protected boolean rightOrder(Card cardOrigin, Card cardDestination) {
+        if (cardDestination == null) return true;
         if (cardOrigin.getNum().equals("K")) return false;
-
-        ArrayList<String> orderedDeck = new ArrayList<>(
-                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
-        );
         return cardDestination.getNum().equals(orderedDeck.get(orderedDeck.indexOf(cardOrigin.getNum()) - 1));
     }
 
@@ -137,16 +117,15 @@ public class Spider extends Solitaire {
      * @param idx The index of the column where the slice starts.
      * @return Returns true in case that it is valid. False otherwise.
      */
-    private boolean validSlice(int col, int idx) {
+    @Override
+    protected boolean validSlice(int col, int idx) {
         Card card1;
         Card card2;
 
         card1 = tableau.getCard(col, idx);
         for (int i = idx + 1; i < tableau.colSize(col); i++) {
             card2 = tableau.getCard(col, i);
-            if (card1.getSuit() != card2.getSuit() || !rightOrder(card2, card1)) {
-                return false;
-            }
+            if (card1.getSuit() != card2.getSuit() || !rightOrder(card2, card1)) return false;
             card1 = card2;
         }
 
@@ -159,16 +138,11 @@ public class Spider extends Solitaire {
      * @param dest The column where the last move was carried out.
      */
     private void checkSequence(int dest) {
-        ArrayList<String> order = new ArrayList<>(
-                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
-        );
         int idx = 12;
         Suit suit = tableau.getCard(dest).getSuit();
         for (int i = tableau.colSize(dest) - 1; i >= tableau.colSize(dest) - 13; i--) {
             Card card = tableau.getCard(dest, i);
-            if (!card.getNum().equals(order.get(idx)) || card.getSuit() != suit) {
-                return;
-            }
+            if (!card.getNum().equals(orderedDeck.get(idx)) || card.getSuit() != suit) return;
             idx--;
         }
         ArrayList<Card> stack = tableau.removeCards(dest, tableau.colSize(dest) - 13);

@@ -1,3 +1,9 @@
 public enum Suit {
-    CLUBS, DIAMONDS, HEARTS, SPADES
+    CLUBS("black"), DIAMONDS("red"), HEARTS("red"), SPADES("black");
+
+    public String color;
+
+    Suit(String color) {
+        this.color = color;
+    }
 }

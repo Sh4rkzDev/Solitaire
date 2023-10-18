@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Foundation {
-    private final ArrayList<ArrayList<Card>> foundation;
+    protected ArrayList<ArrayList<Card>> foundation;
 
     public Foundation(int cols) {
         foundation = new ArrayList<>(cols);

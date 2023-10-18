@@ -1,8 +1,14 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public abstract class Solitaire implements Interaction {
     protected final byte tableauCols;
     protected Deck deck;
     protected Foundation foundation;
     protected Tableau tableau;
+    protected ArrayList<String> orderedDeck = new ArrayList<>(
+            Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
+    );
 
     public Solitaire(byte suits, byte decks, byte tableauCols, byte foundationCols) {
         this.deck = new Deck(suits, decks);
@@ -31,7 +37,21 @@ public abstract class Solitaire implements Interaction {
 
     protected abstract void addCards();
 
-    protected abstract boolean validMove(int tableauCol, int idx, int tableauColDestination);
+    protected boolean validMove(int col, int idx, int dest) {
+        if (col >= tableauCols || dest >= tableauCols ||
+                idx >= tableau.colSize(col) || !tableau.getCard(col, idx).isVisible()) {
+            return false;
+        }
+
+        Card cardOrigin = tableau.getCard(col, idx);
+        Card cardDestination = tableau.colSize(dest) == 0 ? null : tableau.getCard(dest);
+
+        return rightOrder(cardOrigin, cardDestination) && validSlice(col, idx);
+    }
+
+    protected abstract boolean rightOrder(Card cardOrigin, Card cardDestination);
+
+    protected abstract boolean validSlice(int col, int idx);
 
     protected abstract boolean victory();
 }
