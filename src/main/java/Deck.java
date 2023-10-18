@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Deck {
 
-    protected ArrayList<Card> cards = new ArrayList<>(52);
+    private ArrayList<Card> cards = new ArrayList<>(52);
 
     public Deck(byte suits) {
         addCards(suits);
