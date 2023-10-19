@@ -1,4 +1,6 @@
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable {
     Suit suit;
     String num;
     boolean visible = false;
@@ -16,7 +18,9 @@ public class Card {
         return suit;
     }
 
-    public void makeItVisible(){this.visible = true;}
+    public void makeItVisible() {
+        this.visible = true;
+    }
 
     public boolean isVisible() {
         return visible;

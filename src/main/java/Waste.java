@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Waste {
+public class Waste implements Serializable {
 
     private ArrayList<Card> waste;
 

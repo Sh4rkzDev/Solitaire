@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-public class Deck {
+public class Deck implements Serializable {
 
     private ArrayList<Card> cards = new ArrayList<>(52);
 

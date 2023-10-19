@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Spider extends Solitaire {
+public class Spider extends Solitaire implements Serializable {
 
     /**
      * Constructor of the Spider Solitaire Game.

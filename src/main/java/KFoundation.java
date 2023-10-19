@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class KFoundation extends Foundation {
+public class KFoundation extends Foundation implements Serializable {
 
     public KFoundation() {
         super(4);

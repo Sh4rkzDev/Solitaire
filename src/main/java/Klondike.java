@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Klondike extends Solitaire {
+public class Klondike extends Solitaire implements Serializable {
 
     protected KFoundation foundation;
     private final Waste waste = new Waste();
