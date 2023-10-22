@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class Solitaire implements Interaction {
+public abstract class Solitaire implements Interaction, Serialization {
     protected final byte tableauCols;
     protected Deck deck;
     protected Foundation foundation;

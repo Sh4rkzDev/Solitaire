@@ -1,7 +1,7 @@
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 
-public class Klondike extends Solitaire implements Serializable {
+public class Klondike extends Solitaire {
 
     protected KFoundation foundation;
     private final Waste waste = new Waste();
@@ -140,5 +140,21 @@ public class Klondike extends Solitaire implements Serializable {
             if (foundation.colSize(i) != 13) return false;
         }
         return true;
+    }
+
+    @Override
+    public void serialize(String path) throws IOException {
+        ObjectOutputStream obj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
+        obj.writeObject(this);
+        obj.flush();
+        obj.close();
+    }
+
+    @Override
+    public Klondike deserialize(String path) throws IOException, ClassNotFoundException {
+        ObjectInputStream obj = new ObjectInputStream(new BufferedInputStream(new FileInputStream(path)));
+        Klondike res = (Klondike) obj.readObject();
+        obj.close();
+        return res;
     }
 }

@@ -1,7 +1,7 @@
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 
-public class Spider extends Solitaire implements Serializable {
+public class Spider extends Solitaire {
 
     /**
      * Constructor of the Spider Solitaire Game.
@@ -152,5 +152,21 @@ public class Spider extends Solitaire implements Serializable {
     @Override
     protected boolean victory() {
         return foundation.size() == 8;
+    }
+
+    @Override
+    public void serialize(String path) throws IOException {
+        ObjectOutputStream obj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
+        obj.writeObject(this);
+        obj.flush();
+        obj.close();
+    }
+
+    @Override
+    public Spider deserialize(String path) throws IOException, ClassNotFoundException {
+        ObjectInputStream obj = new ObjectInputStream(new BufferedInputStream(new FileInputStream(path)));
+        Spider res = (Spider) obj.readObject();
+        obj.close();
+        return res;
     }
 }
