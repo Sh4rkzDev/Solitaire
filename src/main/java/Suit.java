@@ -1,5 +1,5 @@
 public enum Suit {
-    CLUBS("black"), DIAMONDS("red"), HEARTS("red"), SPADES("black");
+    CLUBS("black"), DIAMONDS("red"), SPADES("black"), HEARTS("red");
 
     public String color;
 

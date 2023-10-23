@@ -51,6 +51,7 @@ public class Klondike extends Solitaire {
      */
     public Klondike(Deck deck, Tableau tableau, KFoundation foundation) {
         super(deck, tableau, foundation, (byte) 7);
+        this.foundation = foundation;
     }
 
     @Override
@@ -69,12 +70,13 @@ public class Klondike extends Solitaire {
     }
 
     public boolean moveFromWasteToTableau(int col) {
+        int realCol = col - 1;
         Card cardOrigin = waste.getCard();
-        Card cardDest = tableau.colSize(col) == 0 ? null : tableau.getCard(col);
+        Card cardDest = tableau.colSize(realCol) == 0 ? null : tableau.getCard(realCol);
 
-        if (!rightOrder(cardOrigin, cardDest)) return false;
+        if (!rightOrder(cardOrigin, cardDest) || !validColor(cardOrigin, cardDest)) return false;
         Card card = waste.removeCard();
-        tableau.addCard(card, col);
+        tableau.addCard(card, realCol);
         return true;
     }
 
@@ -89,11 +91,12 @@ public class Klondike extends Solitaire {
     }
 
     public boolean moveFromTableauToFoundation(int col) {
-        Card cardOrigin = tableau.getCard(col);
+        int realCol = col - 1;
+        Card cardOrigin = tableau.getCard(realCol);
         Card cardDest = foundation.colSize(cardOrigin.getSuit().ordinal()) == 0 ? null : foundation.getCard(cardOrigin.getSuit().ordinal());
 
         if (!rightOrderInverted(cardOrigin, cardDest)) return false;
-        Card card = tableau.removeCards(col, tableau.colSize(col) - 1).get(0);
+        Card card = tableau.removeCards(realCol, tableau.colSize(realCol) - 1).get(0);
         foundation.addCard(card, card.getSuit().ordinal());
         return true;
     }
@@ -127,11 +130,16 @@ public class Klondike extends Solitaire {
         card1 = tableau.getCard(col, idx);
         for (int i = idx + 1; i < tableau.colSize(col); i++) {
             card2 = tableau.getCard(col, i);
-            if (card1.getSuit().color.equals(card2.getSuit().color) || !rightOrder(card2, card1)) return false;
+            if (!validColor(card2, card1) || !rightOrder(card2, card1)) return false;
             card1 = card2;
         }
 
         return true;
+    }
+
+    private boolean validColor(Card cardOrigin, Card cardDest) {
+        if (cardDest == null) return true;
+        return !cardOrigin.getSuit().color.equals(cardDest.getSuit().color);
     }
 
     @Override
