@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -132,5 +133,10 @@ public class SpiderTest {
                 assertEquals(c1.get(j).getNum(), c2.get(j).getNum());
             }
         }
+    }
+
+    @Test
+    public void testDeserializeException() {
+        assertThrows(IOException.class, () -> Spider.deserialize("DoNotExist"));
     }
 }

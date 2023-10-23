@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -173,4 +174,10 @@ public class KlondikeTest {
             assertTrue(kld.moveFromWasteToFoundation());
         }
     }
+
+    @Test
+    public void testDeserializeException() {
+        assertThrows(IOException.class, () -> Klondike.deserialize("DoNotExist"));
+    }
+    
 }

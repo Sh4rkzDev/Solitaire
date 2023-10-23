@@ -152,17 +152,17 @@ public class Klondike extends Solitaire {
 
     @Override
     public void serialize(String path) throws IOException {
-        ObjectOutputStream obj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
-        obj.writeObject(this);
-        obj.flush();
-        obj.close();
+        try (var obj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path)))) {
+            obj.writeObject(this);
+            obj.flush();
+        }
     }
 
-    @Override
-    public Klondike deserialize(String path) throws IOException, ClassNotFoundException {
-        ObjectInputStream obj = new ObjectInputStream(new BufferedInputStream(new FileInputStream(path)));
-        Klondike res = (Klondike) obj.readObject();
-        obj.close();
+    public static Klondike deserialize(String path) throws IOException, ClassNotFoundException {
+        Klondike res;
+        try (var obj = new ObjectInputStream(new BufferedInputStream(new FileInputStream(path)))) {
+            res = (Klondike) obj.readObject();
+        }
         return res;
     }
 }
