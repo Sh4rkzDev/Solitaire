@@ -82,7 +82,7 @@ public class Klondike extends Solitaire {
 
     public boolean moveFromWasteToFoundation() {
         Card cardOrigin = waste.getCard();
-        Card cardDest = foundation.getCard(cardOrigin.getSuit().ordinal());
+        Card cardDest = foundation.colSize(cardOrigin.getSuit().ordinal()) == 0 ? null : foundation.getCard(cardOrigin.getSuit().ordinal());
 
         if (!rightOrderInverted(cardOrigin, cardDest)) return false;
         Card card = waste.removeCard();

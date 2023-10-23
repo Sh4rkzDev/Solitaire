@@ -138,4 +138,39 @@ public class KlondikeTest {
         kld.getCards();
         assertTrue(kld.moveFromWasteToTableau(1));
     }
+
+    @Test
+    public void testWasteToFoundation() {
+        Tableau tableau = new Tableau(7);
+        KFoundation foundation = new KFoundation();
+        Deck deck = new Deck((byte) 4);
+
+        Klondike kld = new Klondike(deck, tableau, foundation);
+        int aux = 0;
+        for (int i = 0; i < 52; i++) {
+            kld.getCards();
+            if (i == 12 + 13 * aux) {
+                aux++;
+                continue;
+            }
+            assertFalse(kld.moveFromWasteToFoundation());
+        }
+        for (int i = 0; i < 52; i++) {
+            assertTrue(kld.moveFromWasteToFoundation());
+        }
+        assertTrue(kld.victory());
+
+        tableau = new Tableau(7);
+        foundation = new KFoundation();
+        deck = new Deck((byte) 4);
+        kld = new Klondike(deck, tableau, foundation);
+        for (int i = 0; i < 14; i++) {
+            kld.getCards();
+        }
+        assertFalse(kld.moveFromWasteToFoundation());
+        assertTrue(kld.moveFromWasteToTableau(5));
+        for (int i = 0; i < 13; i++) {
+            assertTrue(kld.moveFromWasteToFoundation());
+        }
+    }
 }
