@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -179,5 +179,49 @@ public class KlondikeTest {
     public void testDeserializeException() {
         assertThrows(IOException.class, () -> Klondike.deserialize("DoNotExist"));
     }
-    
+
+    @Test
+    public void testNewGameWithSeedPersistence() throws IOException, ClassNotFoundException {
+        Klondike kld1 = new Klondike((byte) 1, 9);
+        kld1.serialize("klondike.txt");
+        Klondike kld2 = Klondike.deserialize("klondike.txt");
+        for (int i = 0; i < 5; i++) {
+            ArrayList<Card> c1 = kld1.getCards();
+            ArrayList<Card> c2 = kld2.getCards();
+            assertEquals(c1.get(0).getSuit(), c2.get(0).getSuit());
+            assertEquals(c1.get(0).getNum(), c2.get(0).getNum());
+        }
+    }
+
+    @Test
+    public void testPersistence() throws IOException, ClassNotFoundException {
+        Tableau tableau = new Tableau(7);
+        KFoundation foundation = new KFoundation();
+        Deck deck = new Deck((byte) 4);
+
+        Klondike kld = new Klondike(deck, tableau, foundation);
+        kld.getCards();
+        kld.moveFromWasteToTableau(1);
+        for (int i = 0; i < 12; i++) {
+            kld.getCards();
+        }
+        kld.moveFromWasteToFoundation();
+        kld.getCards();
+        kld.moveFromWasteToTableau(2);
+        kld.getCards();
+        assertTrue(kld.moveFromWasteToTableau(1));
+
+        kld.serialize("klondike2.txt");
+        Klondike kld2 = Klondike.deserialize("klondike2.txt");
+
+        assertEquals(kld.tableau.getCard(0,0).getSuit(), kld2.tableau.getCard(0,0).getSuit());
+        assertEquals(kld.tableau.getCard(0,1).getSuit(), kld2.tableau.getCard(0,1).getSuit());
+        assertEquals(kld.tableau.getCard(1,0).getSuit(), kld2.tableau.getCard(1,0).getSuit());
+        assertEquals(kld.tableau.getCard(0,0).getNum(), kld2.tableau.getCard(0,0).getNum());
+        assertEquals(kld.tableau.getCard(0,1).getNum(), kld2.tableau.getCard(0,1).getNum());
+        assertEquals(kld.tableau.getCard(1,0).getNum(), kld2.tableau.getCard(1,0).getNum());
+        assertEquals(kld.foundation.size(), kld2.foundation.size());
+
+    }
+
 }

@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class Solitaire implements Interaction, Serialization {
+public abstract class Solitaire implements Interaction, Serialization, Serializable {
     protected final byte tableauCols;
     protected Deck deck;
     protected Foundation foundation;
