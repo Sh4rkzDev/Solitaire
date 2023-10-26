@@ -1,4 +1,6 @@
-public enum Suit {
+import java.io.Serializable;
+
+public enum Suit implements Serializable {
     CLUBS("black"), DIAMONDS("red"), SPADES("black"), HEARTS("red");
 
     public String color;
