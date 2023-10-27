@@ -10,6 +10,10 @@ public class Waste implements Serializable {
         waste = new ArrayList<>();
     }
 
+    public boolean isEmpty() {
+        return waste.isEmpty();
+    }
+
     public void addCard(Card card) {
         waste.add(card);
     }

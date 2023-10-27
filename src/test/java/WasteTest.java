@@ -26,7 +26,7 @@ public class WasteTest {
         Card q = new Card(Suit.DIAMONDS, "Q");
         Card j = new Card(Suit.DIAMONDS, "J");
         Card ten = new Card(Suit.DIAMONDS, "10");
-        var aux = new ArrayList<Card>(Arrays.asList(k, q, j, ten));
+        var aux = new ArrayList<>(Arrays.asList(k, q, j, ten));
         for (Card card : aux) {
             waste.addCard(card);
             assertEquals(card.getNum(), waste.getCard().getNum());
@@ -46,7 +46,7 @@ public class WasteTest {
         Card q = new Card(Suit.DIAMONDS, "Q");
         Card j = new Card(Suit.DIAMONDS, "J");
         Card ten = new Card(Suit.DIAMONDS, "10");
-        var aux = new ArrayList<Card>(Arrays.asList(k, q, j, ten));
+        var aux = new ArrayList<>(Arrays.asList(k, q, j, ten));
         Deck deck1 = new Deck(aux);
         for (int i = aux.size() - 1; i > -1; i--) {
             waste.addCard(aux.get(i));

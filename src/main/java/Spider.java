@@ -154,6 +154,12 @@ public class Spider extends Solitaire {
         return foundation.size() == 8;
     }
 
+    /**
+     * Save the game to continue it at any moment.
+     *
+     * @param path Name of the file where the game will be saved.
+     * @throws IOException Throws an Exception in case of any problem while saving it.
+     */
     @Override
     public void serialize(String path) throws IOException {
         try (var obj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path)))) {
@@ -162,6 +168,14 @@ public class Spider extends Solitaire {
         }
     }
 
+    /**
+     * Load a saved game to continue it.
+     *
+     * @param path Name of the file where the game is saved.
+     * @return Returns the Spider game with all movements that had been done.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static Spider deserialize(String path) throws IOException, ClassNotFoundException {
         Spider res;
         try (var obj = new ObjectInputStream(new BufferedInputStream(new FileInputStream(path)))) {

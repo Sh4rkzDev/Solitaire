@@ -135,9 +135,9 @@ public class KlondikeTest {
             assertFalse(kld.moveFromWasteToTableau(2));
         }
         kld.getCards();
-        assertTrue(kld.moveFromWasteToTableau(2));
         kld.getCards();
         assertTrue(kld.moveFromWasteToTableau(1));
+        assertTrue(kld.moveFromWasteToTableau(2));
     }
 
     @Test
@@ -214,12 +214,12 @@ public class KlondikeTest {
         kld.serialize("klondike2.txt");
         Klondike kld2 = Klondike.deserialize("klondike2.txt");
 
-        assertEquals(kld.tableau.getCard(0,0).getSuit(), kld2.tableau.getCard(0,0).getSuit());
-        assertEquals(kld.tableau.getCard(0,1).getSuit(), kld2.tableau.getCard(0,1).getSuit());
-        assertEquals(kld.tableau.getCard(1,0).getSuit(), kld2.tableau.getCard(1,0).getSuit());
-        assertEquals(kld.tableau.getCard(0,0).getNum(), kld2.tableau.getCard(0,0).getNum());
-        assertEquals(kld.tableau.getCard(0,1).getNum(), kld2.tableau.getCard(0,1).getNum());
-        assertEquals(kld.tableau.getCard(1,0).getNum(), kld2.tableau.getCard(1,0).getNum());
+        assertEquals(kld.tableau.getCard(0, 0).getSuit(), kld2.tableau.getCard(0, 0).getSuit());
+        assertEquals(kld.tableau.getCard(0, 1).getSuit(), kld2.tableau.getCard(0, 1).getSuit());
+        assertEquals(kld.tableau.getCard(1, 0).getSuit(), kld2.tableau.getCard(1, 0).getSuit());
+        assertEquals(kld.tableau.getCard(0, 0).getNum(), kld2.tableau.getCard(0, 0).getNum());
+        assertEquals(kld.tableau.getCard(0, 1).getNum(), kld2.tableau.getCard(0, 1).getNum());
+        assertEquals(kld.tableau.getCard(1, 0).getNum(), kld2.tableau.getCard(1, 0).getNum());
         assertEquals(kld.foundation.size(), kld2.foundation.size());
 
     }

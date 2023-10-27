@@ -30,6 +30,10 @@ public class Klondike extends Solitaire {
         this.reDeals = reDeals;
     }
 
+    /**
+     * It adds cards to each column in the form of the Klondike tableau:
+     * The first column has one card, the second column has two cards, and so on. The card that is on top is visible.
+     */
     @Override
     protected void addCards() {
         for (int i = 0; i < tableauCols; i++) {
@@ -54,6 +58,11 @@ public class Klondike extends Solitaire {
         this.foundation = foundation;
     }
 
+    /**
+     * Add a card to the Waste. In case of no cards left in the deck, the waste is returned to the deck upside down in case of redeals left.
+     *
+     * @return Returns an ArrayList of the card that is added to the Waste.
+     */
     @Override
     public ArrayList<Card> getCards() {
         ArrayList<Card> res = new ArrayList<>();
@@ -69,7 +78,14 @@ public class Klondike extends Solitaire {
         return res;
     }
 
+    /**
+     * Move the card from the Waste to the Tableau in case of being valid.
+     *
+     * @param col The column where the card should be put on.
+     * @return Returns true if it is valid and the move was executed. False otherwise.
+     */
     public boolean moveFromWasteToTableau(int col) {
+        if (waste.isEmpty()) return false;
         int realCol = col - 1;
         Card cardOrigin = waste.getCard();
         Card cardDest = tableau.colSize(realCol) == 0 ? null : tableau.getCard(realCol);
@@ -80,7 +96,13 @@ public class Klondike extends Solitaire {
         return true;
     }
 
+    /**
+     * Move the Card from the Waste to the foundation in case of being valid.
+     *
+     * @return Returns true if it is valid the move was executed. False otherwise.
+     */
     public boolean moveFromWasteToFoundation() {
+        if (waste.isEmpty()) return false;
         Card cardOrigin = waste.getCard();
         Card cardDest = foundation.colSize(cardOrigin.getSuit().ordinal()) == 0 ? null : foundation.getCard(cardOrigin.getSuit().ordinal());
 
@@ -90,8 +112,15 @@ public class Klondike extends Solitaire {
         return true;
     }
 
+    /**
+     * Move the Card from the given column of the tableau to the foundation. You can only add card by card to the foundation.
+     *
+     * @param col The column from the tableau where the card should be extracted. The card that is on top of the column is the one to be moved.
+     * @return Returns true if it is valid the move was executed. False otherwise.
+     */
     public boolean moveFromTableauToFoundation(int col) {
         int realCol = col - 1;
+        if (tableau.colSize(realCol) == 0) return false;
         Card cardOrigin = tableau.getCard(realCol);
         Card cardDest = foundation.colSize(cardOrigin.getSuit().ordinal()) == 0 ? null : foundation.getCard(cardOrigin.getSuit().ordinal());
 
@@ -101,6 +130,14 @@ public class Klondike extends Solitaire {
         return true;
     }
 
+    /**
+     * Move the stack of cards from the origin column to the destination column if it is valid.
+     *
+     * @param col  The origin column where the cards will be extracted.
+     * @param idx  The position from the slice in the column that want to be moved.
+     * @param dest The destination column where the slice will be added
+     * @return Returns true in case of being a valid move and it was executed. False otherwise.
+     */
     @Override
     public boolean move(int col, int idx, int dest) {
         int realCol = col - 1;
@@ -122,6 +159,13 @@ public class Klondike extends Solitaire {
         return cardDestination.getNum().equals(orderedDeck.get(orderedDeck.indexOf(cardOrigin.getNum()) + 1));
     }
 
+    /**
+     * Reminder: it is a valid slice if the cards are of different colors.
+     *
+     * @param col The column where the slice is placed.
+     * @param idx The index of the beginning of the slice.
+     * @return Returns true if it is a valid slice.
+     */
     @Override
     protected boolean validSlice(int col, int idx) {
         Card card1;
@@ -150,6 +194,12 @@ public class Klondike extends Solitaire {
         return true;
     }
 
+    /**
+     * Save the game to continue it at any moment.
+     *
+     * @param path Name of the file where the game will be saved.
+     * @throws IOException Throws an Exception in case of any problem while saving it.
+     */
     @Override
     public void serialize(String path) throws IOException {
         try (var obj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path)))) {
@@ -158,6 +208,14 @@ public class Klondike extends Solitaire {
         }
     }
 
+    /**
+     * Load a saved game to continue it.
+     *
+     * @param path Name of the file where the game is saved.
+     * @return Returns the Klondike game with all movements that had been done.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static Klondike deserialize(String path) throws IOException, ClassNotFoundException {
         Klondike res;
         try (var obj = new ObjectInputStream(new BufferedInputStream(new FileInputStream(path)))) {

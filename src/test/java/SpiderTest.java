@@ -139,4 +139,56 @@ public class SpiderTest {
     public void testDeserializeException() {
         assertThrows(IOException.class, () -> Spider.deserialize("DoNotExist"));
     }
+
+    @Test
+    public void testNewGameWithSeedPersistence() throws IOException, ClassNotFoundException {
+        Spider sp1 = new Spider((byte) 1, 9);
+        sp1.serialize("spider.txt");
+        Spider sp2 = Spider.deserialize("spider.txt");
+        for (int i = 0; i < 5; i++) {
+            ArrayList<Card> c1 = sp1.getCards();
+            ArrayList<Card> c2 = sp2.getCards();
+            for (int j = 0; j < 10; j++) {
+                assertEquals(c1.get(j).getSuit(), c2.get(j).getSuit());
+                assertEquals(c1.get(j).getNum(), c2.get(j).getNum());
+            }
+        }
+    }
+
+    @Test
+    public void testPersistence() throws IOException, ClassNotFoundException {
+        Tableau tableau = new Tableau(10);
+        Foundation foundation = new Foundation(8);
+        Deck deck = new Deck((byte) 1, (byte) 2);
+        {
+            ArrayList<Card> stack = new ArrayList<>(13);
+            for (int i = 0; i < 13; i++) {
+                stack.add(deck.removeCard());
+            }
+            foundation.addStack(stack);
+        }
+        Spider sp1 = new Spider(deck, tableau, foundation);
+        sp1.getCards();
+        for (int i = 10; i > 5; i--) {
+            sp1.move(i, 1, i - 1);
+        }
+
+        sp1.serialize("spider2.txt");
+        Spider sp2 = Spider.deserialize("spider2.txt");
+
+        assertEquals(sp1.tableau.getCard(0, 0).getSuit(), sp2.tableau.getCard(0, 0).getSuit());
+        assertEquals(sp1.tableau.getCard(1, 0).getSuit(), sp2.tableau.getCard(1, 0).getSuit());
+        assertEquals(sp1.tableau.getCard(0, 0).getNum(), sp2.tableau.getCard(0, 0).getNum());
+        assertEquals(sp1.tableau.getCard(1, 0).getNum(), sp2.tableau.getCard(1, 0).getNum());
+        assertEquals(sp1.foundation.size(), sp2.foundation.size());
+        for (int i = 0; i < 6; i++) {
+            ArrayList<Card> c1 = sp1.getCards();
+            ArrayList<Card> c2 = sp2.getCards();
+            for (int j = 0; j < 10; j++) {
+                assertEquals(c1.get(j).getSuit(), c2.get(j).getSuit());
+                assertEquals(c1.get(j).getNum(), c2.get(j).getNum());
+            }
+        }
+
+    }
 }

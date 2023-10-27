@@ -22,7 +22,7 @@ public class KFoundationTest {
         Card card = new Card(Suit.CLUBS, "A");
         Card card1 = new Card(Suit.CLUBS, "2");
         Card card2 = new Card(Suit.CLUBS, "3");
-        var aux = new ArrayList<Card>(Arrays.asList(card, card1, card2));
+        var aux = new ArrayList<>(Arrays.asList(card, card1, card2));
         for (int i = 0; i < aux.size(); i++) {
             foundation.addCard(aux.get(i), 2);
             assertEquals(i + 1, foundation.colSize(2));
