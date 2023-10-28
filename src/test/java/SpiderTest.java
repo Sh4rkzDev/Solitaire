@@ -191,4 +191,42 @@ public class SpiderTest {
         }
 
     }
+
+    @Test
+    public void testPersistenceWin() {
+        Tableau tableau = new Tableau(10);
+        Foundation foundation = new Foundation(8);
+        Deck deck = new Deck((byte) 1, (byte) 2);
+        for (int j = 0; j < 7; j++) {
+            ArrayList<Card> stack = new ArrayList<>(13);
+            for (int i = 0; i < 13; i++) {
+                stack.add(deck.removeCard());
+            }
+            foundation.addStack(stack);
+        }
+        for (int i = 0; i < 12; i++) {
+            Card card = deck.removeCard();
+            card.makeItVisible();
+            tableau.addCard(card, 0);
+        }
+        Card left = deck.removeCard();
+        left.makeItVisible();
+        tableau.addCard(left, 1);
+
+        Spider sp1 = new Spider(deck, tableau, foundation);
+        try {
+            sp1.serialize("spiderWin");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Spider sp2;
+        try {
+            sp2 = Spider.deserialize("spiderWin");
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertEquals(sp1.move(2, 1, 1), sp2.move(2, 1, 1));
+        assertEquals(sp1.victory(), sp2.victory());
+    }
 }
