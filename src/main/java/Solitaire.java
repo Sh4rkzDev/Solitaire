@@ -54,5 +54,5 @@ public abstract class Solitaire implements Interaction, Serialization, Serializa
 
     protected abstract boolean validSlice(int col, int idx);
 
-    protected abstract boolean victory();
+    public abstract boolean victory();
 }

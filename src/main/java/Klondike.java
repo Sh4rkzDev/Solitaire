@@ -187,7 +187,7 @@ public class Klondike extends Solitaire {
     }
 
     @Override
-    protected boolean victory() {
+    public boolean victory() {
         for (int i = 0; i < foundation.size(); i++) {
             if (foundation.colSize(i) != 13) return false;
         }

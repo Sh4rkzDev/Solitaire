@@ -26,11 +26,14 @@ class Deck {
 	+ shuffle()
 }
 
-interface Solitaire {
-	+ getCards()
-  + validMove()
-	+ move()
-  + victory()
+abstract class Solitaire {
+  # {abstract} validMove()
+  + {abstract} victory()
+}
+
+interface Interaction {
+  + getCards()
+  + move()
 }
 
 class Column {
@@ -53,11 +56,7 @@ class Foundation {
   + size()
 }
 
-class Solitaire1 {
-  - rules
-}
-
-class Solitaire2 {
+class ConcreteSolitaire {
   - rules
 }
 
@@ -67,9 +66,9 @@ Card  ->  Suit
 Solitaire "*" *-up- "1" Deck: Composition
 Solitaire *-- Tableau: Composition
 Solitaire *-- Foundation: Composition
+Solitaire ..left|> Interaction: Realization
 Tableau "1" *-left- "*" Column: Composition
-Solitaire1 ..right|> Solitaire: Implements
-Solitaire2 ..left|> Solitaire: Implements
+ConcreteSolitaire ..left|> Solitaire: Implements
 
 
 @enduml

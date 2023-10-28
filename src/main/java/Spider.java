@@ -150,7 +150,7 @@ public class Spider extends Solitaire {
     }
 
     @Override
-    protected boolean victory() {
+    public boolean victory() {
         return foundation.size() == 8;
     }
 
