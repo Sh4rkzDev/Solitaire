@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
-
 public class DeckTest extends TestCase {
 
     @Test
@@ -17,7 +15,7 @@ public class DeckTest extends TestCase {
         Card card;
 
         while (!deck.isEmpty()) {
-            card = deck.getCard();
+            card = deck.removeCard();
             String key = card.getNum();
             if (dict.containsKey(key)) {
                 dict.replace(key, dict.get(key) + 1);
@@ -46,26 +44,24 @@ public class DeckTest extends TestCase {
         Card card;
 
         while (!deck.isEmpty()) {
-            card = deck.getCard();
+            card = deck.removeCard();
             String key = card.getNum();
             Suit suit = card.getSuit();
             switch (suit) {
-                case CLUBS:
+                case CLUBS -> {
                     if (dictCLUBS.containsKey(key)) {
                         dictCLUBS.replace(key, dictCLUBS.get(key) + 1);
                     } else {
                         dictCLUBS.put(key, 1);
                     }
-                    break;
-
-                case DIAMONDS:
+                }
+                case DIAMONDS -> {
                     if (dictDIAMONDS.containsKey(key)) {
                         dictDIAMONDS.replace(key, dictDIAMONDS.get(key) + 1);
                     } else {
                         dictDIAMONDS.put(key, 1);
                     }
-                    break;
-
+                }
             }
 
         }
@@ -79,8 +75,8 @@ public class DeckTest extends TestCase {
         );
 
         for (String element : orderedDeck) {
-            for (HashMap dict : dictionaries) {
-                int amountElem = (int) dict.get(element);
+            for (HashMap<String, Integer> dict : dictionaries) {
+                int amountElem = dict.get(element);
                 assertEquals(4, amountElem);
             }
 
@@ -98,41 +94,38 @@ public class DeckTest extends TestCase {
         Card card;
 
         while (!deck.isEmpty()) {
-            card = deck.getCard();
+            card = deck.removeCard();
             String key = card.getNum();
             Suit suit = card.getSuit();
             switch (suit) {
-                case CLUBS:
+                case CLUBS -> {
                     if (dictCLUBS.containsKey(key)) {
                         dictCLUBS.replace(key, dictCLUBS.get(key) + 1);
                     } else {
                         dictCLUBS.put(key, 1);
                     }
-                    break;
-
-                case DIAMONDS:
+                }
+                case DIAMONDS -> {
                     if (dictDIAMONDS.containsKey(key)) {
                         dictDIAMONDS.replace(key, dictDIAMONDS.get(key) + 1);
                     } else {
                         dictDIAMONDS.put(key, 1);
                     }
-                    break;
-
-                case HEARTS:
+                }
+                case HEARTS -> {
                     if (dictHEARTS.containsKey(key)) {
                         dictHEARTS.replace(key, dictHEARTS.get(key) + 1);
                     } else {
                         dictHEARTS.put(key, 1);
                     }
-                    break;
-
-                case SPADES:
+                }
+                case SPADES -> {
                     if (dictSPADES.containsKey(key)) {
                         dictSPADES.replace(key, dictSPADES.get(key) + 1);
                     } else {
                         dictSPADES.put(key, 1);
                     }
-                    break;
+                }
             }
 
         }
@@ -148,8 +141,8 @@ public class DeckTest extends TestCase {
         );
 
         for (String element : orderedDeck) {
-            for (HashMap dict : dictionaries) {
-                int amountElem = (int) dict.get(element);
+            for (HashMap<String, Integer> dict : dictionaries) {
+                int amountElem = dict.get(element);
                 assertEquals(2, amountElem);
             }
 
@@ -163,7 +156,7 @@ public class DeckTest extends TestCase {
         Card card;
 
         while (!deck.isEmpty()) {
-            card = deck.getCard();
+            card = deck.removeCard();
             String key = card.getNum();
             if (dict.containsKey(key)) {
                 dict.replace(key, dict.get(key) + 1);
@@ -190,8 +183,8 @@ public class DeckTest extends TestCase {
         deck2.shuffle(5);
 
         while (!deck1.isEmpty()) {
-            Card card1 = deck1.getCard();
-            Card card2 = deck2.getCard();
+            Card card1 = deck1.removeCard();
+            Card card2 = deck2.removeCard();
             assertEquals(card1.getNum(), card2.getNum());
             assertEquals(card1.getSuit(), card2.getSuit());
         }

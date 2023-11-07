@@ -1,12 +1,7 @@
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class Spider implements Solitaire {
-
-    private final int tableauCols = 10;
-    private final Deck deck;
-    private Foundation foundation = new Foundation(8);
-    private Tableau tableau = new Tableau(tableauCols);
+public class Spider extends Solitaire {
 
     /**
      * Constructor of the Spider Solitaire Game.
@@ -14,9 +9,7 @@ public class Spider implements Solitaire {
      * @param suits The number of suits to be played.
      */
     public Spider(byte suits) {
-        deck = new Deck(suits, (byte) 2);
-        deck.shuffle();
-        addCards();
+        super(suits, (byte) 2, (byte) 10, (byte) 8);
     }
 
     /**
@@ -26,9 +19,7 @@ public class Spider implements Solitaire {
      * @param seed  It can take a seed to generate a specific game scenario
      */
     public Spider(byte suits, int seed) {
-        deck = new Deck(suits, (byte) 2);
-        deck.shuffle(seed);
-        addCards();
+        super(suits, (byte) 2, (byte) 10, (byte) 8, seed);
     }
 
     /**
@@ -36,15 +27,16 @@ public class Spider implements Solitaire {
      * The first 4 columns have one more card than the others.
      * The card lying on the top of the column is set visible.
      */
-    private void addCards() {
+    @Override
+    protected void addCards() {
         for (int i = 0; i < tableauCols; i++) {
             Card top = null;
             for (int j = 0; j < 5; j++) {
-                top = deck.getCard();
+                top = deck.removeCard();
                 tableau.addCard(top, i);
             }
             if (i < 4) {
-                top = deck.getCard();
+                top = deck.removeCard();
                 tableau.addCard(top, i);
             }
             top.makeItVisible();
@@ -52,16 +44,14 @@ public class Spider implements Solitaire {
     }
 
     /**
-     * Constructor used for testing purpose only
+     * Constructor used for testing purpose only.
      *
      * @param deck       Specific Deck to be passed.
      * @param tableau    Specific Tableau to be passed.
      * @param foundation Specific Foundation to be passed.
      */
     public Spider(Deck deck, Tableau tableau, Foundation foundation) {
-        this.deck = deck;
-        this.tableau = tableau;
-        this.foundation = foundation;
+        super(deck, tableau, foundation, (byte) 10);
     }
 
     /**
@@ -74,7 +64,7 @@ public class Spider implements Solitaire {
         ArrayList<Card> res = new ArrayList<>(tableauCols);
         for (int i = 0; i < tableauCols; i++) {
             if (deck.isEmpty()) return res;
-            Card card = deck.getCard();
+            Card card = deck.removeCard();
             card.makeItVisible();
             tableau.addCard(card, i);
             res.add(card);
@@ -95,47 +85,27 @@ public class Spider implements Solitaire {
         int realCol = col - 1;
         int realIdx = idx - 1;
         int realDest = dest - 1;
-        if (!validMove(realCol, realIdx, realDest)) {
-            return false;
-        }
+        if (!validMove(realCol, realIdx, realDest)) return false;
         tableau.move(realCol, realIdx, realDest);
-        if (tableau.colSize(realDest) >= 13) {
-            checkSequence(realDest);
-        }
+        if (tableau.colSize(realDest) >= 13) checkSequence(realDest);
         return true;
-    }
-
-    @Override
-    public boolean validMove(int col, int idx, int dest) {
-        if (col >= tableauCols || dest >= tableauCols ||
-                idx >= tableau.colSize(col) || !tableau.getCard(col, idx).isVisible()) {
-            return false;
-        }
-
-        Card cardOrigin = tableau.getCard(col, idx);
-        Card cardDestination = tableau.colSize(dest) == 0 ? null : tableau.getCard(dest);
-
-        return rightOrder(cardOrigin, cardDestination) && validSlice(col, idx);
     }
 
     /**
      * Verify that the given cards are in the correct order.
+     * <p>
      * Reminder: two cards are stackable even tho they are not from the same suit.
+     * <p>
      * Reminder: we can stack any card above an empty space.
      *
      * @param cardOrigin      The card that is supposed to be on top of the another.
      * @param cardDestination The card that is supposed to be under the another.
      * @return Returns true if it is correct. False otherwise.
      */
-    private boolean rightOrder(Card cardOrigin, Card cardDestination) {
-        if (cardDestination == null) {
-            return true;
-        }
+    @Override
+    protected boolean rightOrder(Card cardOrigin, Card cardDestination) {
+        if (cardDestination == null) return true;
         if (cardOrigin.getNum().equals("K")) return false;
-
-        ArrayList<String> orderedDeck = new ArrayList<>(
-                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
-        );
         return cardDestination.getNum().equals(orderedDeck.get(orderedDeck.indexOf(cardOrigin.getNum()) - 1));
     }
 
@@ -147,16 +117,15 @@ public class Spider implements Solitaire {
      * @param idx The index of the column where the slice starts.
      * @return Returns true in case that it is valid. False otherwise.
      */
-    private boolean validSlice(int col, int idx) {
+    @Override
+    protected boolean validSlice(int col, int idx) {
         Card card1;
         Card card2;
 
         card1 = tableau.getCard(col, idx);
         for (int i = idx + 1; i < tableau.colSize(col); i++) {
             card2 = tableau.getCard(col, i);
-            if (card1.getSuit() != card2.getSuit() || !rightOrder(card2, card1)) {
-                return false;
-            }
+            if (card1.getSuit() != card2.getSuit() || !rightOrder(card2, card1)) return false;
             card1 = card2;
         }
 
@@ -169,16 +138,11 @@ public class Spider implements Solitaire {
      * @param dest The column where the last move was carried out.
      */
     private void checkSequence(int dest) {
-        ArrayList<String> order = new ArrayList<>(
-                Arrays.asList("K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A")
-        );
         int idx = 12;
         Suit suit = tableau.getCard(dest).getSuit();
         for (int i = tableau.colSize(dest) - 1; i >= tableau.colSize(dest) - 13; i--) {
             Card card = tableau.getCard(dest, i);
-            if (!card.getNum().equals(order.get(idx)) || card.getSuit() != suit) {
-                return;
-            }
+            if (!card.getNum().equals(orderedDeck.get(idx)) || card.getSuit() != suit) return;
             idx--;
         }
         ArrayList<Card> stack = tableau.removeCards(dest, tableau.colSize(dest) - 13);
@@ -188,5 +152,35 @@ public class Spider implements Solitaire {
     @Override
     public boolean victory() {
         return foundation.size() == 8;
+    }
+
+    /**
+     * Save the game to continue it at any moment.
+     *
+     * @param path Name of the file where the game will be saved.
+     * @throws IOException Throws an Exception in case of any problem while saving it.
+     */
+    @Override
+    public void serialize(String path) throws IOException {
+        try (var obj = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path)))) {
+            obj.writeObject(this);
+            obj.flush();
+        }
+    }
+
+    /**
+     * Load a saved game to continue it.
+     *
+     * @param path Name of the file where the game is saved.
+     * @return Returns the Spider game with all movements that had been done.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static Spider deserialize(String path) throws IOException, ClassNotFoundException {
+        Spider res;
+        try (var obj = new ObjectInputStream(new BufferedInputStream(new FileInputStream(path)))) {
+            res = (Spider) obj.readObject();
+        }
+        return res;
     }
 }

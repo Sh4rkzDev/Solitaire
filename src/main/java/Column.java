@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Column {
+public class Column implements Serializable {
     private final ArrayList<Card> col = new ArrayList<>(6);
 
     public Column() {

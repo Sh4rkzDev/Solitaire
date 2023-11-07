@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -21,16 +22,16 @@ public class SpiderTest {
         for (int j = 0; j < 7; j++) {
             ArrayList<Card> stack = new ArrayList<>(13);
             for (int i = 0; i < 13; i++) {
-                stack.add(deck.getCard());
+                stack.add(deck.removeCard());
             }
             foundation.addStack(stack);
         }
         for (int i = 0; i < 12; i++) {
-            Card card = deck.getCard();
+            Card card = deck.removeCard();
             card.makeItVisible();
             tableau.addCard(card, 0);
         }
-        Card left = deck.getCard();
+        Card left = deck.removeCard();
         left.makeItVisible();
         tableau.addCard(left, 1);
         assertTrue(deck.isEmpty());
@@ -47,11 +48,11 @@ public class SpiderTest {
         Deck deck = new Deck((byte) 1, (byte) 2);
 
         for (int i = 0; i < 10; i++) {
-            Card card = deck.getCard();
+            Card card = deck.removeCard();
             card.makeItVisible();
             tableau.addCard(card, i);
             if (i < 4) {
-                card = deck.getCard();
+                card = deck.removeCard();
                 card.makeItVisible();
                 tableau.addCard(card, i);
             }
@@ -73,11 +74,11 @@ public class SpiderTest {
         Deck deck = new Deck((byte) 1, (byte) 2);
 
         for (int i = 0; i < 10; i++) {
-            Card card = deck.getCard();
+            Card card = deck.removeCard();
             card.makeItVisible();
             tableau.addCard(card, i);
             if (i < 4) {
-                card = deck.getCard();
+                card = deck.removeCard();
                 card.makeItVisible();
                 tableau.addCard(card, i);
             }
@@ -99,12 +100,12 @@ public class SpiderTest {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 6; j++) {
-                Card card = deck.getCard();
+                Card card = deck.removeCard();
                 card.makeItVisible();
                 tableau.addCard(card, i);
             }
             if ((i - 1) % 2 == 0) {
-                Card card = deck.getCard();
+                Card card = deck.removeCard();
                 card.makeItVisible();
                 tableau.addCard(card, i);
             }
@@ -132,5 +133,100 @@ public class SpiderTest {
                 assertEquals(c1.get(j).getNum(), c2.get(j).getNum());
             }
         }
+    }
+
+    @Test
+    public void testDeserializeException() {
+        assertThrows(IOException.class, () -> Spider.deserialize("DoNotExist"));
+    }
+
+    @Test
+    public void testNewGameWithSeedPersistence() throws IOException, ClassNotFoundException {
+        Spider sp1 = new Spider((byte) 1, 9);
+        sp1.serialize("spider.txt");
+        Spider sp2 = Spider.deserialize("spider.txt");
+        for (int i = 0; i < 5; i++) {
+            ArrayList<Card> c1 = sp1.getCards();
+            ArrayList<Card> c2 = sp2.getCards();
+            for (int j = 0; j < 10; j++) {
+                assertEquals(c1.get(j).getSuit(), c2.get(j).getSuit());
+                assertEquals(c1.get(j).getNum(), c2.get(j).getNum());
+            }
+        }
+    }
+
+    @Test
+    public void testPersistence() throws IOException, ClassNotFoundException {
+        Tableau tableau = new Tableau(10);
+        Foundation foundation = new Foundation(8);
+        Deck deck = new Deck((byte) 1, (byte) 2);
+        {
+            ArrayList<Card> stack = new ArrayList<>(13);
+            for (int i = 0; i < 13; i++) {
+                stack.add(deck.removeCard());
+            }
+            foundation.addStack(stack);
+        }
+        Spider sp1 = new Spider(deck, tableau, foundation);
+        sp1.getCards();
+        for (int i = 10; i > 5; i--) {
+            sp1.move(i, 1, i - 1);
+        }
+
+        sp1.serialize("spider2.txt");
+        Spider sp2 = Spider.deserialize("spider2.txt");
+
+        assertEquals(sp1.tableau.getCard(0, 0).getSuit(), sp2.tableau.getCard(0, 0).getSuit());
+        assertEquals(sp1.tableau.getCard(1, 0).getSuit(), sp2.tableau.getCard(1, 0).getSuit());
+        assertEquals(sp1.tableau.getCard(0, 0).getNum(), sp2.tableau.getCard(0, 0).getNum());
+        assertEquals(sp1.tableau.getCard(1, 0).getNum(), sp2.tableau.getCard(1, 0).getNum());
+        assertEquals(sp1.foundation.size(), sp2.foundation.size());
+        for (int i = 0; i < 6; i++) {
+            ArrayList<Card> c1 = sp1.getCards();
+            ArrayList<Card> c2 = sp2.getCards();
+            for (int j = 0; j < 10; j++) {
+                assertEquals(c1.get(j).getSuit(), c2.get(j).getSuit());
+                assertEquals(c1.get(j).getNum(), c2.get(j).getNum());
+            }
+        }
+
+    }
+
+    @Test
+    public void testPersistenceWin() {
+        Tableau tableau = new Tableau(10);
+        Foundation foundation = new Foundation(8);
+        Deck deck = new Deck((byte) 1, (byte) 2);
+        for (int j = 0; j < 7; j++) {
+            ArrayList<Card> stack = new ArrayList<>(13);
+            for (int i = 0; i < 13; i++) {
+                stack.add(deck.removeCard());
+            }
+            foundation.addStack(stack);
+        }
+        for (int i = 0; i < 12; i++) {
+            Card card = deck.removeCard();
+            card.makeItVisible();
+            tableau.addCard(card, 0);
+        }
+        Card left = deck.removeCard();
+        left.makeItVisible();
+        tableau.addCard(left, 1);
+
+        Spider sp1 = new Spider(deck, tableau, foundation);
+        try {
+            sp1.serialize("spiderWin");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Spider sp2;
+        try {
+            sp2 = Spider.deserialize("spiderWin");
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertEquals(sp1.move(2, 1, 1), sp2.move(2, 1, 1));
+        assertEquals(sp1.victory(), sp2.victory());
     }
 }

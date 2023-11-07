@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Tableau {
+public class Tableau implements Serializable {
     private final ArrayList<Column> tableau;
 
     public Tableau(int cols) {
