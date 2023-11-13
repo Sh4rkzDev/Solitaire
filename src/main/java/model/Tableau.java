@@ -1,3 +1,5 @@
+package model;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -25,7 +27,7 @@ public class Tableau implements Serializable {
      * It removes the cards from the given column and put them to destination column.
      *
      * @param col  The origin column where the cards will be extracted.
-     * @param idx  The index from the Column where the cards will be extracted to the end.
+     * @param idx  The index from the model.Column where the cards will be extracted to the end.
      * @param dest The column where the extracted cards will be placed.
      */
     public void move(int col, int idx, int dest) {

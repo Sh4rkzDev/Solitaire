@@ -1,10 +1,12 @@
+package model;
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class Spider extends Solitaire {
 
     /**
-     * Constructor of the Spider Solitaire Game.
+     * Constructor of the model.Spider model.Solitaire Game.
      *
      * @param suits The number of suits to be played.
      */
@@ -13,7 +15,7 @@ public class Spider extends Solitaire {
     }
 
     /**
-     * Constructor of the Spider Solitaire Game.
+     * Constructor of the model.Spider model.Solitaire Game.
      *
      * @param suits The number of suits to be played.
      * @param seed  It can take a seed to generate a specific game scenario
@@ -46,9 +48,9 @@ public class Spider extends Solitaire {
     /**
      * Constructor used for testing purpose only.
      *
-     * @param deck       Specific Deck to be passed.
-     * @param tableau    Specific Tableau to be passed.
-     * @param foundation Specific Foundation to be passed.
+     * @param deck       Specific model.Deck to be passed.
+     * @param tableau    Specific model.Tableau to be passed.
+     * @param foundation Specific model.Foundation to be passed.
      */
     public Spider(Deck deck, Tableau tableau, Foundation foundation) {
         super(deck, tableau, foundation, (byte) 10);
@@ -172,7 +174,7 @@ public class Spider extends Solitaire {
      * Load a saved game to continue it.
      *
      * @param path Name of the file where the game is saved.
-     * @return Returns the Spider game with all movements that had been done.
+     * @return Returns the model.Spider game with all movements that had been done.
      * @throws IOException
      * @throws ClassNotFoundException
      */

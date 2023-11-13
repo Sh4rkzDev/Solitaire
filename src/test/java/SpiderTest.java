@@ -1,5 +1,7 @@
+import model.*;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -8,7 +10,7 @@ import static org.junit.Assert.*;
 public class SpiderTest {
     @Test
     public void testNewGame() {
-        // We verify the initial state of a Spider Solitaire game
+        // We verify the initial state of a model.Spider model.Solitaire game
         var sp = new Spider((byte) 1);
         assertNotNull(sp);
         assertFalse(sp.victory());
@@ -143,8 +145,9 @@ public class SpiderTest {
     @Test
     public void testNewGameWithSeedPersistence() throws IOException, ClassNotFoundException {
         Spider sp1 = new Spider((byte) 1, 9);
-        sp1.serialize("spider.txt");
-        Spider sp2 = Spider.deserialize("spider.txt");
+        var path = "spider";
+        sp1.serialize(path);
+        Spider sp2 = Spider.deserialize(path);
         for (int i = 0; i < 5; i++) {
             ArrayList<Card> c1 = sp1.getCards();
             ArrayList<Card> c2 = sp2.getCards();
@@ -153,6 +156,8 @@ public class SpiderTest {
                 assertEquals(c1.get(j).getNum(), c2.get(j).getNum());
             }
         }
+        File file = new File(path);
+        file.delete();
     }
 
     @Test
@@ -173,14 +178,12 @@ public class SpiderTest {
             sp1.move(i, 1, i - 1);
         }
 
-        sp1.serialize("spider2.txt");
-        Spider sp2 = Spider.deserialize("spider2.txt");
+        var path = "spider2";
 
-        assertEquals(sp1.tableau.getCard(0, 0).getSuit(), sp2.tableau.getCard(0, 0).getSuit());
-        assertEquals(sp1.tableau.getCard(1, 0).getSuit(), sp2.tableau.getCard(1, 0).getSuit());
-        assertEquals(sp1.tableau.getCard(0, 0).getNum(), sp2.tableau.getCard(0, 0).getNum());
-        assertEquals(sp1.tableau.getCard(1, 0).getNum(), sp2.tableau.getCard(1, 0).getNum());
-        assertEquals(sp1.foundation.size(), sp2.foundation.size());
+        sp1.serialize(path);
+        Spider sp2 = Spider.deserialize(path);
+
+        assertEquals(sp1.victory(), sp2.victory());
         for (int i = 0; i < 6; i++) {
             ArrayList<Card> c1 = sp1.getCards();
             ArrayList<Card> c2 = sp2.getCards();
@@ -189,7 +192,8 @@ public class SpiderTest {
                 assertEquals(c1.get(j).getNum(), c2.get(j).getNum());
             }
         }
-
+        File file = new File(path);
+        file.delete();
     }
 
     @Test
@@ -213,20 +217,24 @@ public class SpiderTest {
         left.makeItVisible();
         tableau.addCard(left, 1);
 
+        var path = "spiderWin";
         Spider sp1 = new Spider(deck, tableau, foundation);
         try {
-            sp1.serialize("spiderWin");
+            sp1.serialize(path);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         Spider sp2;
         try {
-            sp2 = Spider.deserialize("spiderWin");
+            sp2 = Spider.deserialize(path);
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
         assertEquals(sp1.move(2, 1, 1), sp2.move(2, 1, 1));
         assertEquals(sp1.victory(), sp2.victory());
+
+        File file = new File(path);
+        file.delete();
     }
 }

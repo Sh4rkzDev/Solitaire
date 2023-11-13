@@ -1,3 +1,5 @@
+package model;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -8,7 +10,7 @@ public class Klondike extends Solitaire {
     private byte reDeals;
 
     /**
-     * Constructor of the Klondike Solitaire Game.
+     * Constructor of the model.Klondike model.Solitaire Game.
      *
      * @param reDeals Number of redeals allow.
      */
@@ -19,7 +21,7 @@ public class Klondike extends Solitaire {
     }
 
     /**
-     * Constructor of the Klondike Solitaire Game.
+     * Constructor of the model.Klondike model.Solitaire Game.
      *
      * @param reDeals Number of redeals allow.
      * @param seed    It can take a seed to generate a specific game scenario.
@@ -31,7 +33,7 @@ public class Klondike extends Solitaire {
     }
 
     /**
-     * It adds cards to each column in the form of the Klondike tableau:
+     * It adds cards to each column in the form of the model.Klondike tableau:
      * The first column has one card, the second column has two cards, and so on. The card that is on top is visible.
      */
     @Override
@@ -49,9 +51,9 @@ public class Klondike extends Solitaire {
     /**
      * Constructor used for testing purposes only.
      *
-     * @param deck       Specific Deck to be passed.
-     * @param tableau    Specific Tableau to be passed.
-     * @param foundation Specific Foundation to be passed.
+     * @param deck       Specific model.Deck to be passed.
+     * @param tableau    Specific model.Tableau to be passed.
+     * @param foundation Specific model.Foundation to be passed.
      */
     public Klondike(Deck deck, Tableau tableau, KFoundation foundation) {
         super(deck, tableau, foundation, (byte) 7);
@@ -59,9 +61,9 @@ public class Klondike extends Solitaire {
     }
 
     /**
-     * Add a card to the Waste. In case of no cards left in the deck, the waste is returned to the deck upside down in case of redeals left.
+     * Add a card to the model.Waste. In case of no cards left in the deck, the waste is returned to the deck upside down in case of redeals left.
      *
-     * @return Returns an ArrayList of the card that is added to the Waste.
+     * @return Returns an ArrayList of the card that is added to the model.Waste.
      */
     @Override
     public ArrayList<Card> getCards() {
@@ -79,7 +81,7 @@ public class Klondike extends Solitaire {
     }
 
     /**
-     * Move the card from the Waste to the Tableau in case of being valid.
+     * Move the card from the model.Waste to the model.Tableau in case of being valid.
      *
      * @param col The column where the card should be put on.
      * @return Returns true if it is valid and the move was executed. False otherwise.
@@ -97,7 +99,7 @@ public class Klondike extends Solitaire {
     }
 
     /**
-     * Move the Card from the Waste to the foundation in case of being valid.
+     * Move the model.Card from the model.Waste to the foundation in case of being valid.
      *
      * @return Returns true if it is valid the move was executed. False otherwise.
      */
@@ -113,7 +115,7 @@ public class Klondike extends Solitaire {
     }
 
     /**
-     * Move the Card from the given column of the tableau to the foundation. You can only add card by card to the foundation.
+     * Move the model.Card from the given column of the tableau to the foundation. You can only add card by card to the foundation.
      *
      * @param col The column from the tableau where the card should be extracted. The card that is on top of the column is the one to be moved.
      * @return Returns true if it is valid the move was executed. False otherwise.
@@ -212,7 +214,7 @@ public class Klondike extends Solitaire {
      * Load a saved game to continue it.
      *
      * @param path Name of the file where the game is saved.
-     * @return Returns the Klondike game with all movements that had been done.
+     * @return Returns the model.Klondike game with all movements that had been done.
      * @throws IOException
      * @throws ClassNotFoundException
      */

@@ -2,16 +2,16 @@
 
 skin rose
 
-title Solitaire - Class Diagram
+title model.Solitaire - Class Diagram
 
-enum Suit {
+enum model.Suit {
   hearts
   clubs
   diamonds
   spades
 }
 
-class Card {
+class model.Card {
   - number
   - visible
   + getData()
@@ -19,31 +19,31 @@ class Card {
 	+ makeItVisible()
 }
 
-class Deck {
+class model.Deck {
   - cards
   + getCard()
 	+ isEmpty()
 	+ shuffle()
 }
 
-abstract class Solitaire {
+abstract class model.Solitaire {
   # {abstract} validMove()
   + {abstract} victory()
 }
 
-interface Interaction {
+interface model.Interaction {
   + getCards()
   + move()
 }
 
-class Column {
+class model.Column {
   + addCard()
   + getCard()
   + removeCards()
   + size()
 }
 
-class Tableau {
+class model.Tableau {
   + addCard()
   + move()
   + colSize()
@@ -51,7 +51,7 @@ class Tableau {
   + removeCards()
 }
 
-class Foundation {
+class model.Foundation {
   + addStack()
   + size()
 }
@@ -61,14 +61,14 @@ class ConcreteSolitaire {
 }
 
 
-Deck "1" *-up- "*" Card: Composition
-Card  ->  Suit
-Solitaire "*" *-up- "1" Deck: Composition
-Solitaire *-- Tableau: Composition
-Solitaire *-- Foundation: Composition
-Solitaire ..left|> Interaction: Realization
-Tableau "1" *-left- "*" Column: Composition
-ConcreteSolitaire ..left|> Solitaire: Implements
+model.Deck "1" *-up- "*" model.Card: Composition
+model.Card  ->  model.Suit
+model.Solitaire "*" *-up- "1" model.Deck: Composition
+model.Solitaire *-- model.Tableau: Composition
+model.Solitaire *-- model.Foundation: Composition
+model.Solitaire ..left|> model.Interaction: Realization
+model.Tableau "1" *-left- "*" model.Column: Composition
+ConcreteSolitaire ..left|> model.Solitaire: Implements
 
 
 @enduml

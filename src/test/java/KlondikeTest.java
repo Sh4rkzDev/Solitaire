@@ -1,3 +1,4 @@
+import model.*;
 import org.junit.Test;
 
 import java.io.*;
@@ -9,7 +10,7 @@ public class KlondikeTest {
 
     @Test
     public void testNewGame() {
-        // We verify the initial state of a Klondike Solitaire game
+        // We verify the initial state of a model.Klondike model.Solitaire game
         var kld = new Klondike((byte) 3);
         assertNotNull(kld);
         assertFalse(kld.victory());
@@ -183,14 +184,18 @@ public class KlondikeTest {
     @Test
     public void testNewGameWithSeedPersistence() throws IOException, ClassNotFoundException {
         Klondike kld1 = new Klondike((byte) 1, 9);
-        kld1.serialize("klondike.txt");
-        Klondike kld2 = Klondike.deserialize("klondike.txt");
+        var path = "klondike";
+        kld1.serialize(path);
+        Klondike kld2 = Klondike.deserialize(path);
         for (int i = 0; i < 5; i++) {
             ArrayList<Card> c1 = kld1.getCards();
             ArrayList<Card> c2 = kld2.getCards();
             assertEquals(c1.get(0).getSuit(), c2.get(0).getSuit());
             assertEquals(c1.get(0).getNum(), c2.get(0).getNum());
         }
+
+        File file = new File(path);
+        file.delete();
     }
 
     @Test
@@ -211,17 +216,18 @@ public class KlondikeTest {
         kld.getCards();
         assertTrue(kld.moveFromWasteToTableau(1));
 
-        kld.serialize("klondike2.txt");
-        Klondike kld2 = Klondike.deserialize("klondike2.txt");
+        var path = "klondike2";
+        kld.serialize(path);
+        Klondike kld2 = Klondike.deserialize(path);
 
-        assertEquals(kld.tableau.getCard(0, 0).getSuit(), kld2.tableau.getCard(0, 0).getSuit());
-        assertEquals(kld.tableau.getCard(0, 1).getSuit(), kld2.tableau.getCard(0, 1).getSuit());
-        assertEquals(kld.tableau.getCard(1, 0).getSuit(), kld2.tableau.getCard(1, 0).getSuit());
-        assertEquals(kld.tableau.getCard(0, 0).getNum(), kld2.tableau.getCard(0, 0).getNum());
-        assertEquals(kld.tableau.getCard(0, 1).getNum(), kld2.tableau.getCard(0, 1).getNum());
-        assertEquals(kld.tableau.getCard(1, 0).getNum(), kld2.tableau.getCard(1, 0).getNum());
-        assertEquals(kld.foundation.size(), kld2.foundation.size());
-
+        for (int i = 0; i < 35; i++) {
+            Card c1 = kld.getCards().get(0);
+            Card c2 = kld2.getCards().get(0);
+            assertEquals(c1.getSuit(), c2.getSuit());
+            assertEquals(c1.getNum(), c2.getNum());
+        }
+        File file = new File(path);
+        file.delete();
     }
 
 }
