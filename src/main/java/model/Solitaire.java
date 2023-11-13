@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class Solitaire implements Interaction, Serialization, Serializable {
+public abstract class Solitaire implements Serialization, Serializable {
     protected final byte tableauCols;
     protected Deck deck;
     protected Foundation foundation;
@@ -55,6 +55,10 @@ public abstract class Solitaire implements Interaction, Serialization, Serializa
     protected abstract boolean rightOrder(Card cardOrigin, Card cardDestination);
 
     protected abstract boolean validSlice(int col, int idx);
+
+    public abstract ArrayList<Card> getCards();
+
+    public abstract boolean move(int tableauCol, int idx, int tableauColDestination);
 
     public abstract boolean victory();
 }
