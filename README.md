@@ -1,4 +1,4 @@
-# model.Solitaire
+# Solitaire
 
 El objetivo del TP es implementar un videojuego que permita jugar diferentes variantes de solitarios. Al finalizar el
 desarrollo se podrá jugar al menos 2 variantes.
