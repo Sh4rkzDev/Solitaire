@@ -169,7 +169,7 @@ public class Klondike extends Solitaire {
      * @return Returns true if it is a valid slice.
      */
     @Override
-    protected boolean validSlice(int col, int idx) {
+    public boolean validSlice(int col, int idx) {
         Card card1;
         Card card2;
 

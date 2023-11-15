@@ -120,7 +120,7 @@ public class Spider extends Solitaire {
      * @return Returns true in case that it is valid. False otherwise.
      */
     @Override
-    protected boolean validSlice(int col, int idx) {
+    public boolean validSlice(int col, int idx) {
         Card card1;
         Card card2;
 

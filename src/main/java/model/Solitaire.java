@@ -54,7 +54,7 @@ public abstract class Solitaire implements Serialization, Serializable {
 
     protected abstract boolean rightOrder(Card cardOrigin, Card cardDestination);
 
-    protected abstract boolean validSlice(int col, int idx);
+    public abstract boolean validSlice(int col, int idx);
 
     public abstract ArrayList<Card> getCards();
 
