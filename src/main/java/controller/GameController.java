@@ -1,10 +1,14 @@
 package controller;
 
-import view.View;
+import view.GameUI;
 
 public class GameController {
 
-    public GameController(View view) {
+    public GameController(GameUI view) {
 
+    }
+
+    public void start() {
+        
     }
 }

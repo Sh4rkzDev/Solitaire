@@ -1,13 +1,13 @@
 package controller;
 
 import model.Spider;
-import view.View;
+import view.GameUI;
 
 public class SpiderController {
-    private View view;
+    private GameUI view;
     private Spider sp;
 
-    public SpiderController(View view) {
+    public SpiderController(GameUI view) {
         this.view = view;
         sp = new Spider();
     }

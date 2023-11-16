@@ -1,14 +1,14 @@
 package controller;
 
 import model.Klondike;
-import view.View;
+import view.GameUI;
 
 public class KlondikeController {
 
-    private View view;
+    private GameUI view;
     private Klondike kld;
 
-    public KlondikeController(View view) {
+    public KlondikeController(GameUI view) {
         this.view = view;
         kld = new Klondike();
     }
