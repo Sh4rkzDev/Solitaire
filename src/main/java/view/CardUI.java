@@ -15,6 +15,6 @@ public class CardUI {
             case HEARTS -> strSuit = "H";
         }
         String path = (num.equals("10") ? "T" : num) + strSuit + ".svg";
-
+        
     }
 }
