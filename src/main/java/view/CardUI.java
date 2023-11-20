@@ -1,10 +1,15 @@
 package view;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import model.Suit;
 
 public class CardUI {
-    private Canvas canvas;
+    private final double width = 120;
+    private final double height = 200;
+
+    private final Canvas canvas = new Canvas(width, height);
+
 
     public CardUI(String num, Suit suit) {
         String strSuit = "";
@@ -14,7 +19,11 @@ public class CardUI {
             case SPADES -> strSuit = "S";
             case HEARTS -> strSuit = "H";
         }
-        String path = (num.equals("10") ? "T" : num) + strSuit + ".svg";
-        
+        Image img = new Image("src/main/java/resources/" + (num.equals("10") ? "T" : num) + strSuit + ".png");
+        canvas.getGraphicsContext2D().drawImage(img, width, height);
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
 }
