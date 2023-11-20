@@ -8,7 +8,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         var label = new Label("Hola mundo!");
-        var scene = new Scene(new StackPane(label), 640, 480);
+        var scene = new Scene(new StackPane(label), 1200, 700);
         stage.setScene(scene);
         stage.show();
     }

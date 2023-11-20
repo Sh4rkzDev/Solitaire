@@ -38,6 +38,12 @@
             <version>21-ea+24</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>22-ea+16</version>
+        </dependency>
+
     </dependencies>
 
 </project>

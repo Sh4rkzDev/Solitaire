@@ -8,8 +8,6 @@ public class SpiderController {
     private Spider sp;
 
     public SpiderController(GameUI view) {
-        this.view = view;
-        sp = new Spider();
     }
 
 

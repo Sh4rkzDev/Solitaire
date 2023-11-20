@@ -9,7 +9,5 @@ public class KlondikeController {
     private Klondike kld;
 
     public KlondikeController(GameUI view) {
-        this.view = view;
-        kld = new Klondike();
     }
 }
