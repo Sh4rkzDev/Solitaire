@@ -1,0 +1,18 @@
+#table {
+    -fx-background-image: url("img/background4.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.column {
+    -fx-border-color: #393838;
+    -fx-border-radius: 10;
+    -fx-border-width: 3;
+}
+
+.foundation {
+    -fx-border-color: #392f0e;
+    -fx-border-radius: 10;
+    -fx-border-width: 3;
+}
