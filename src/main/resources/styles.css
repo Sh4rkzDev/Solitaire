@@ -7,8 +7,11 @@
 
 .column {
     -fx-background-color: #393838;
-    -fx-opacity: 0.3;
     -fx-background-radius: 10;
+}
+
+CardUI {
+    -fx-opacity: 1.0;
 }
 
 .foundation {

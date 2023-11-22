@@ -1,7 +1,10 @@
 package view;
 
+import controller.CardController;
+import controller.DeckController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -22,7 +25,7 @@ public class KlondikeUI {
     @FXML
     private AnchorPane root;
 
-    public KlondikeUI(Stage stage, Klondike kld) {
+    public KlondikeUI(Stage stage, Klondike kld, CardController controller) {
         this.kld = kld;
         var loader = new FXMLLoader(getClass().getResource("/klondike.fxml"));
         loader.setController(this);
@@ -33,26 +36,31 @@ public class KlondikeUI {
         }
         table = (GridPane) root.getChildren().get(0);
         scene = new Scene(root, root.getWidth(), root.getHeight());
-        loadGame();
+        loadGame(controller);
         stage.setScene(scene);
         stage.show();
     }
 
-    private void loadGame() {
+    private void loadGame(CardController controller) {
         scene.getStylesheets().add(String.valueOf(this.getClass().getResource("/styles.css")));
         Canvas deck = (Canvas) table.lookup("#deck");
         deck.getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
 
         Tableau tableau = kld.getTableau();
         for (int i = 0; i < 7; i++) {
+            VBox col = (VBox) table.lookup("#c" + (i + 1));
             for (int j = 0; j < i + 1; j++) {
                 Card card = tableau.getCard(i, j);
-                CardUI cardUI = new CardUI(card.getNum(), card.getSuit());
-                VBox col = (VBox) table.getChildren().get(i + 1);
+                CardUI cardUI = new CardUI(card);
                 col.getChildren().add(cardUI);
+                cardUI.draw();
+                cardUI.setTranslateY(-110 * j);
+                cardUI.registerListener(controller);
             }
         }
-        VBox col = (VBox) table.getChildren().get(6);
-        System.out.println(col.getChildren());
+    }
+
+    public Node getNode(String id) {
+        return table.lookup(id);
     }
 }
