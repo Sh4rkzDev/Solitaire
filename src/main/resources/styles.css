@@ -1,4 +1,4 @@
-#table {
+#root {
     -fx-background-image: url("img/background4.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
@@ -6,13 +6,13 @@
 }
 
 .column {
-    -fx-border-color: #393838;
-    -fx-border-radius: 10;
-    -fx-border-width: 3;
+    -fx-background-color: #393838;
+    -fx-opacity: 0.3;
+    -fx-background-radius: 10;
 }
 
 .foundation {
-    -fx-border-color: #392f0e;
-    -fx-border-radius: 10;
-    -fx-border-width: 3;
+    -fx-background-color: #392f0e;
+    -fx-opacity: 0.3;
+    -fx-background-radius: 10;
 }

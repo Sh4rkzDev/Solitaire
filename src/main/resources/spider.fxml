@@ -6,90 +6,90 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="table" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" minHeight="500.0" minWidth="1300.0" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="tableau" alignment="CENTER" hgap="10.0" prefHeight="700.0" prefWidth="1200.0" vgap="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <GridPane fx:id="table" alignment="CENTER" hgap="20.0" minWidth="1200.0" prefHeight="700.0" prefWidth="1300.0" vgap="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="0.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints maxHeight="30.0" />
             <RowConstraints />
-            <RowConstraints />
-            <RowConstraints maxHeight="202.39999389648438" minHeight="10.0" prefHeight="202.39999389648438" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="150.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="500.0" minHeight="10.0" prefHeight="457.6000061035156" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Canvas fx:id="deck" height="200.0" width="120.0" GridPane.rowIndex="2">
+            <Canvas fx:id="deck" height="140.0" width="100.0" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </Canvas>
-            <VBox fx:id="c1" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.rowIndex="3" />
-            <VBox fx:id="c2" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <VBox fx:id="c3" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <VBox fx:id="c4" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <VBox fx:id="c5" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-            <VBox fx:id="c6" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            <VBox fx:id="c7" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-            <VBox fx:id="c8" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-            <VBox fx:id="c9" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.columnIndex="8" GridPane.rowIndex="3" />
-            <VBox fx:id="c10" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="column" GridPane.columnIndex="9" GridPane.rowIndex="3" />
-            <Pane styleClass="foundation" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <VBox fx:id="c1" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.rowIndex="3" />
+            <VBox fx:id="c2" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <VBox fx:id="c3" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <VBox fx:id="c4" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <VBox fx:id="c5" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <VBox fx:id="c6" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <VBox fx:id="c7" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <VBox fx:id="c8" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <VBox fx:id="c9" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="8" GridPane.rowIndex="3" />
+            <VBox fx:id="c10" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="110.0" styleClass="foundation" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
-                  <Canvas fx:id="f1" height="200.0" width="120.0" />
+                  <Canvas fx:id="f1" height="140.0" width="100.0" />
                </children>
-            </Pane>
-            <Pane styleClass="foundation" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            </FlowPane>
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="110.0" styleClass="foundation" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <children>
-                  <Canvas fx:id="f2" height="200.0" width="120.0" />
+                  <Canvas fx:id="f2" height="140.0" width="100.0" />
                </children>
-            </Pane>
-            <Pane styleClass="foundation" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            </FlowPane>
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="110.0" styleClass="foundation" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <children>
-                  <Canvas fx:id="f3" height="200.0" width="120.0" />
+                  <Canvas fx:id="f3" height="140.0" width="100.0" />
                </children>
-            </Pane>
-            <Pane styleClass="foundation" GridPane.columnIndex="5" GridPane.rowIndex="2">
+            </FlowPane>
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="110.0" styleClass="foundation" GridPane.columnIndex="5" GridPane.rowIndex="2">
                <children>
-                  <Canvas fx:id="f4" height="200.0" width="120.0" />
+                  <Canvas fx:id="f4" height="140.0" width="100.0" />
                </children>
-            </Pane>
-            <Pane styleClass="foundation" GridPane.columnIndex="6" GridPane.rowIndex="2">
+            </FlowPane>
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="110.0" styleClass="foundation" GridPane.columnIndex="6" GridPane.rowIndex="2">
                <children>
-                  <Canvas fx:id="f5" height="200.0" width="120.0" />
+                  <Canvas fx:id="f5" height="140.0" width="100.0" />
                </children>
-            </Pane>
-            <Pane styleClass="foundation" GridPane.columnIndex="7" GridPane.rowIndex="2">
+            </FlowPane>
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="110.0" styleClass="foundation" GridPane.columnIndex="7" GridPane.rowIndex="2">
                <children>
-                  <Canvas fx:id="f6" height="200.0" width="120.0" />
+                  <Canvas fx:id="f6" height="140.0" width="100.0" />
                </children>
-            </Pane>
-            <Pane styleClass="foundation" GridPane.columnIndex="8" GridPane.rowIndex="2">
+            </FlowPane>
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="110.0" styleClass="foundation" GridPane.columnIndex="8" GridPane.rowIndex="2">
                <children>
-                  <Canvas fx:id="f7" height="200.0" width="120.0" />
+                  <Canvas fx:id="f7" height="140.0" width="100.0" />
                </children>
-            </Pane>
-            <Pane styleClass="foundation" GridPane.columnIndex="9" GridPane.rowIndex="2">
+            </FlowPane>
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="110.0" styleClass="foundation" GridPane.columnIndex="9" GridPane.rowIndex="2">
                <children>
-                  <Canvas fx:id="f8" height="200.0" width="120.0" />
+                  <Canvas fx:id="f8" height="140.0" width="100.0" />
                </children>
-            </Pane>
-            <MenuButton fx:id="gameMenu" alignment="CENTER" mnemonicParsing="false" text="Game" textAlignment="CENTER">
+            </FlowPane>
+            <MenuButton fx:id="gameMenu" alignment="CENTER" maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" text="Game" textAlignment="CENTER">
               <items>
                 <MenuItem fx:id="btnNewGame" mnemonicParsing="false" text="New Game" />
                 <MenuItem mnemonicParsing="false" text="Action 2" />

@@ -1,17 +1,15 @@
 package view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import model.Suit;
 
-public class CardUI {
-    private final double width = 120;
-    private final double height = 200;
-
-    private final Canvas canvas = new Canvas(width, height);
-
-
+public class CardUI extends Canvas {
     public CardUI(String num, Suit suit) {
+        super();
         String strSuit = "";
         switch (suit) {
             case CLUBS -> strSuit = "C";
@@ -19,11 +17,14 @@ public class CardUI {
             case SPADES -> strSuit = "S";
             case HEARTS -> strSuit = "H";
         }
-        Image img = new Image("src/main/java/resources/" + (num.equals("10") ? "T" : num) + strSuit + ".png");
-        canvas.getGraphicsContext2D().drawImage(img, width, height);
+        String path = "/img/" + (num.equals("10") ? "T" : num) + strSuit + ".png";
+        Image img = new Image(path);
+        double height = 140;
+        double width = 100;
+        super.getGraphicsContext2D().drawImage(img, width, height);
     }
 
-    public Canvas getCanvas() {
-        return canvas;
+    public void registerListener(EventHandler<MouseEvent> event) {
+        super.setOnMouseClicked(event);
     }
 }

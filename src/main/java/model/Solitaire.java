@@ -6,6 +6,19 @@ import java.util.Arrays;
 
 public abstract class Solitaire implements Serialization, Serializable {
     protected final byte tableauCols;
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public Foundation getFoundation() {
+        return foundation;
+    }
+
+    public Tableau getTableau() {
+        return tableau;
+    }
+
     protected Deck deck;
     protected Foundation foundation;
     protected Tableau tableau;

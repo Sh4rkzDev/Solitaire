@@ -225,4 +225,9 @@ public class Klondike extends Solitaire {
         }
         return res;
     }
+
+    @Override
+    public KFoundation getFoundation() {
+        return this.foundation;
+    }
 }

@@ -1,11 +1,11 @@
 package controller;
 
-import view.GameUI;
+import view.KlondikeUI;
 
 public class GameController {
-    GameUI view;
+    KlondikeUI view;
 
-    public GameController(GameUI view) {
+    public GameController(KlondikeUI view) {
 
     }
 

@@ -1,13 +1,13 @@
 package controller;
 
 import model.Spider;
-import view.GameUI;
+import view.KlondikeUI;
 
 public class SpiderController {
-    private GameUI view;
+    private KlondikeUI view;
     private Spider sp;
 
-    public SpiderController(GameUI view) {
+    public SpiderController(KlondikeUI view) {
     }
 
 
