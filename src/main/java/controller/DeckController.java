@@ -6,7 +6,7 @@ import model.Klondike;
 import view.CardUI;
 import view.KlondikeUI;
 
-public class DeckController {
+public class    DeckController {
     private Klondike kld;
     private KlondikeUI ui;
 

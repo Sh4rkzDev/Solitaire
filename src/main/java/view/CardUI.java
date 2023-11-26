@@ -1,6 +1,7 @@
 package view;
 
 import controller.CardController;
+import controller.SpdCardController;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -43,6 +44,13 @@ public class CardUI extends Pane {
     }
 
     public void registerListener(CardController controller) {
+        setOnMouseClicked(event -> {
+            controller.handleClick(this);
+            event.consume();
+        });
+    }
+
+    public void registerListener(SpdCardController controller) {
         setOnMouseClicked(event -> {
             controller.handleClick(this);
             event.consume();
