@@ -1,5 +1,4 @@
 import controller.CardController;
-import controller.DeckController;
 import controller.KlondikeController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,9 +8,11 @@ import view.KlondikeUI;
 public class App extends Application {
     @Override
     public void start(Stage stage) {
-        CardController cardController = new CardController();
         Klondike kld = new Klondike((byte) 1);
+        CardController cardController = new CardController(kld);
         KlondikeUI view = new KlondikeUI(stage, kld, cardController);
-        KlondikeController controller = new KlondikeController(view, kld);
+        cardController.setUi(view);
+        KlondikeController controller = new KlondikeController(view, kld, cardController);
+        cardController.setKldController(controller);
     }
 }

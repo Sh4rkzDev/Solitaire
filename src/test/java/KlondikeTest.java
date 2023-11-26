@@ -35,7 +35,7 @@ public class KlondikeTest {
         assertTrue(deck.isEmpty());
         Klondike kld = new Klondike(deck, tableau, foundation);
         for (int i = 0; i < 13; i++) {
-            assertTrue(kld.moveFromTableauToFoundation(1));
+            assertTrue(kld.moveFromTableauToFoundation(0));
         }
         assertTrue(kld.victory());
     }
@@ -57,10 +57,10 @@ public class KlondikeTest {
         }
 
         Klondike kld = new Klondike(deck, tableau, foundation);
-        for (int i = 4; i > 1; i--) {
-            assertTrue(kld.move(i, 1, i - 1));
+        for (int i = 3; i > 0; i--) {
+            assertTrue(kld.move(i, 0, i - 1));
         }
-        assertTrue(kld.move(1, 1, 4));
+        assertTrue(kld.move(0, 0, 3));
     }
 
     @Test
@@ -85,13 +85,13 @@ public class KlondikeTest {
         }
 
         Klondike kld = new Klondike(deck, tableau, foundation);
-        assertFalse(kld.move(4, 1, 1));
-        assertFalse(kld.move(4, 1, 7));
-        assertFalse(kld.move(4, 2, 5));
-        assertFalse(kld.move(10, 1, 30));
-        assertFalse(kld.move(2, 1, 3));
-        assertFalse(kld.move(1, 1, 10));
-        assertFalse(kld.move(1, 15, 2));
+        assertFalse(kld.move(3, 0, 0));
+        assertFalse(kld.move(3, 0, 6));
+        assertFalse(kld.move(3, 1, 4));
+        assertFalse(kld.move(9, 0, 30));
+        assertFalse(kld.move(1, 0, 2));
+        assertFalse(kld.move(0, 0, 10));
+        assertFalse(kld.move(0, 15, 1));
     }
 
     @Test
@@ -129,16 +129,16 @@ public class KlondikeTest {
 
         Klondike kld = new Klondike(deck, tableau, foundation);
         kld.getCards();
-        assertTrue(kld.moveFromWasteToTableau(1));
+        assertTrue(kld.moveFromWasteToTableau(0));
         for (int i = 0; i < 12; i++) {
             kld.getCards();
+            assertFalse(kld.moveFromWasteToTableau(0));
             assertFalse(kld.moveFromWasteToTableau(1));
-            assertFalse(kld.moveFromWasteToTableau(2));
         }
         kld.getCards();
         kld.getCards();
+        assertTrue(kld.moveFromWasteToTableau(0));
         assertTrue(kld.moveFromWasteToTableau(1));
-        assertTrue(kld.moveFromWasteToTableau(2));
     }
 
     @Test
@@ -170,7 +170,7 @@ public class KlondikeTest {
             kld.getCards();
         }
         assertFalse(kld.moveFromWasteToFoundation());
-        assertTrue(kld.moveFromWasteToTableau(5));
+        assertTrue(kld.moveFromWasteToTableau(4));
         for (int i = 0; i < 13; i++) {
             assertTrue(kld.moveFromWasteToFoundation());
         }
@@ -206,15 +206,15 @@ public class KlondikeTest {
 
         Klondike kld = new Klondike(deck, tableau, foundation);
         kld.getCards();
-        kld.moveFromWasteToTableau(1);
+        kld.moveFromWasteToTableau(0);
         for (int i = 0; i < 12; i++) {
             kld.getCards();
         }
         kld.moveFromWasteToFoundation();
         kld.getCards();
-        kld.moveFromWasteToTableau(2);
+        kld.moveFromWasteToTableau(1);
         kld.getCards();
-        assertTrue(kld.moveFromWasteToTableau(1));
+        assertTrue(kld.moveFromWasteToTableau(0));
 
         var path = "klondike2";
         kld.serialize(path);

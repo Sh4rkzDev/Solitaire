@@ -1,23 +1,26 @@
 package view;
 
 import controller.CardController;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import model.Card;
 import model.Suit;
 
-public class CardUI extends Canvas {
+public class CardUI extends Pane {
     Image img;
     Card card;
+    Canvas canvas;
     private final double height = 140;
     private final double width = 100;
 
     public CardUI(Card card) {
-        super(100, 140);
+        super();
+        setMinSize(width, height);
+        setMaxSize(width, height);
         this.card = card;
+        this.canvas = new Canvas(100, 140);
+        getChildren().add(canvas);
         String num = card.getNum();
         Suit suit = card.getSuit();
         String strSuit = "";
@@ -33,13 +36,24 @@ public class CardUI extends Canvas {
 
     public void draw() {
         if (!card.isVisible()) {
-            getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
+            canvas.getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
             return;
         }
-        getGraphicsContext2D().drawImage(img, 0, 0);
+        canvas.getGraphicsContext2D().drawImage(img, 0, 0);
     }
 
     public void registerListener(CardController controller) {
-        setOnMouseClicked(event -> controller.handleClick(this));
+        setOnMouseClicked(event -> {
+            controller.handleClick(this);
+            event.consume();
+        });
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public Suit getSuit() {
+        return card.getSuit();
     }
 }

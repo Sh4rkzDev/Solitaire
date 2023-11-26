@@ -7,8 +7,14 @@ import view.CardUI;
 import view.KlondikeUI;
 
 public class DeckController {
-    Klondike kld;
-    KlondikeUI ui;
+    private Klondike kld;
+    private KlondikeUI ui;
+
+    public void setCardController(CardController cardController) {
+        this.cardController = cardController;
+    }
+
+    private CardController cardController;
 
     public DeckController(Klondike kld) {
         this.kld = kld;
@@ -29,7 +35,10 @@ public class DeckController {
             StackPane waste = (StackPane) ui.getNode("#waste");
             waste.getChildren().add(cardUI);
             cardUI.draw();
+            cardUI.setOnMouseClicked(event -> {
+                cardController.handleClick(cardUI);
+                event.consume();
+            });
         }
-        System.out.println("Deck Clicked!");
     }
 }

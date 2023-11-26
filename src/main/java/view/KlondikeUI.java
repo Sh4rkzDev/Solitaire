@@ -1,7 +1,6 @@
 package view;
 
 import controller.CardController;
-import controller.DeckController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,11 +16,19 @@ import model.Klondike;
 import model.Tableau;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Set;
 
 public class KlondikeUI {
     private Klondike kld;
     private final Scene scene;
+    @FXML
     private GridPane table;
+
+    public AnchorPane getRoot() {
+        return root;
+    }
+
     @FXML
     private AnchorPane root;
 
@@ -34,7 +41,6 @@ public class KlondikeUI {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        table = (GridPane) root.getChildren().get(0);
         scene = new Scene(root, root.getWidth(), root.getHeight());
         loadGame(controller);
         stage.setScene(scene);
@@ -60,7 +66,32 @@ public class KlondikeUI {
         }
     }
 
+    public ArrayList<CardUI> removeCards(int col, int idx) {
+        VBox column = (VBox) table.lookup("#c" + (col + 1));
+        ArrayList<CardUI> res = new ArrayList<>();
+        while (column.getChildren().size() != idx) {
+            res.add((CardUI) column.getChildren().remove(idx));
+        }
+        if (!column.getChildren().isEmpty()) {
+            CardUI cardUI = (CardUI) column.getChildren().get(idx - 1);
+            cardUI.draw();
+        }
+        return res;
+    }
+
+    public void addCards(int col, ArrayList<CardUI> arr) {
+        VBox column = (VBox) table.lookup("#c" + (col + 1));
+        for (CardUI cardUI : arr) {
+            column.getChildren().add(cardUI);
+            cardUI.setTranslateY(-110 * (column.getChildren().size() - 1));
+        }
+    }
+
     public Node getNode(String id) {
         return table.lookup(id);
+    }
+
+    public Set<Node> getAllNodes(String classStr) {
+        return table.lookupAll(classStr);
     }
 }

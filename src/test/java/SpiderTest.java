@@ -39,7 +39,7 @@ public class SpiderTest {
         assertTrue(deck.isEmpty());
         assertEquals(7, foundation.size());
         Spider sp = new Spider(deck, tableau, foundation);
-        assertTrue(sp.move(2, 1, 1));
+        assertTrue(sp.move(1, 0, 0));
         assertTrue(sp.victory());
     }
 
@@ -61,12 +61,12 @@ public class SpiderTest {
         }
 
         Spider sp = new Spider(deck, tableau, foundation);
-        assertTrue(sp.move(9, 1, 8));
-        assertTrue(sp.move(1, 1, 9));
-        for (int i = 8; i > 1; i--) {
-            assertTrue(sp.move(i, 1, i - 1));
+        assertTrue(sp.move(8, 0, 7));
+        assertTrue(sp.move(0, 0, 8));
+        for (int i = 7; i > 1; i--) {
+            assertTrue(sp.move(i, 0, i - 1));
         }
-        assertTrue(sp.move(1, 1, 9));
+        assertTrue(sp.move(1, 0, 8));
     }
 
     @Test
@@ -87,11 +87,11 @@ public class SpiderTest {
         }
 
         Spider sp = new Spider(deck, tableau, foundation);
-        assertFalse(sp.move(1, 1, 6));
-        assertFalse(sp.move(10, 1, 30));
-        assertFalse(sp.move(11, 1, 1));
-        assertFalse(sp.move(1, 1, 10));
-        assertFalse(sp.move(1, 15, 2));
+        assertFalse(sp.move(0, 0, 5));
+        assertFalse(sp.move(9, 0, 30));
+        assertFalse(sp.move(10, 0, 0));
+        assertFalse(sp.move(0, 0, 9));
+        assertFalse(sp.move(0, 14, 1));
     }
 
     @Test
@@ -114,13 +114,13 @@ public class SpiderTest {
         }
 
         Spider sp = new Spider(deck, tableau, foundation);
-        assertTrue(sp.move(6, 1, 1));
-        assertFalse(sp.move(1, 1, 6));
-        assertTrue(sp.move(1, 7, 6));
-        assertTrue(sp.move(6, 1, 5));
-        assertTrue(sp.move(2, 1, 1));
-        assertTrue(sp.move(10, 3, 1));
-        assertFalse(sp.move(1, 1, 3));
+        assertTrue(sp.move(5, 0, 0));
+        assertFalse(sp.move(0, 0, 5));
+        assertTrue(sp.move(0, 6, 5));
+        assertTrue(sp.move(5, 0, 4));
+        assertTrue(sp.move(1, 0, 0));
+        assertTrue(sp.move(9, 2, 0));
+        assertFalse(sp.move(0, 0, 2));
     }
 
     @Test
@@ -175,7 +175,7 @@ public class SpiderTest {
         Spider sp1 = new Spider(deck, tableau, foundation);
         sp1.getCards();
         for (int i = 10; i > 5; i--) {
-            sp1.move(i, 1, i - 1);
+            sp1.move(i - 1, 0, i);
         }
 
         var path = "spider2";
@@ -231,7 +231,7 @@ public class SpiderTest {
             throw new RuntimeException(e);
         }
 
-        assertEquals(sp1.move(2, 1, 1), sp2.move(2, 1, 1));
+        assertEquals(sp1.move(1, 0, 0), sp2.move(1, 0, 0));
         assertEquals(sp1.victory(), sp2.victory());
 
         File file = new File(path);

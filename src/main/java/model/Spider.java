@@ -84,12 +84,9 @@ public class Spider extends Solitaire {
      */
     @Override
     public boolean move(int col, int idx, int dest) {
-        int realCol = col - 1;
-        int realIdx = idx - 1;
-        int realDest = dest - 1;
-        if (!validMove(realCol, realIdx, realDest)) return false;
-        tableau.move(realCol, realIdx, realDest);
-        if (tableau.colSize(realDest) >= 13) checkSequence(realDest);
+        if (!validMove(col, idx, dest)) return false;
+        tableau.move(col, idx, dest);
+        if (tableau.colSize(dest) >= 13) checkSequence(dest);
         return true;
     }
 

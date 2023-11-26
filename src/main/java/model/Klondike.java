@@ -88,13 +88,12 @@ public class Klondike extends Solitaire {
      */
     public boolean moveFromWasteToTableau(int col) {
         if (waste.isEmpty()) return false;
-        int realCol = col - 1;
         Card cardOrigin = waste.getCard();
-        Card cardDest = tableau.colSize(realCol) == 0 ? null : tableau.getCard(realCol);
+        Card cardDest = tableau.colSize(col) == 0 ? null : tableau.getCard(col);
 
         if (!rightOrder(cardOrigin, cardDest) || !validColor(cardOrigin, cardDest)) return false;
         Card card = waste.removeCard();
-        tableau.addCard(card, realCol);
+        tableau.addCard(card, col);
         return true;
     }
 
@@ -121,13 +120,12 @@ public class Klondike extends Solitaire {
      * @return Returns true if it is valid the move was executed. False otherwise.
      */
     public boolean moveFromTableauToFoundation(int col) {
-        int realCol = col - 1;
-        if (tableau.colSize(realCol) == 0) return false;
-        Card cardOrigin = tableau.getCard(realCol);
+        if (tableau.colSize(col) == 0) return false;
+        Card cardOrigin = tableau.getCard(col);
         Card cardDest = foundation.colSize(cardOrigin.getSuit().ordinal()) == 0 ? null : foundation.getCard(cardOrigin.getSuit().ordinal());
 
         if (!rightOrderInverted(cardOrigin, cardDest)) return false;
-        Card card = tableau.removeCards(realCol, tableau.colSize(realCol) - 1).get(0);
+        Card card = tableau.removeCards(col, tableau.colSize(col) - 1).get(0);
         foundation.addCard(card, card.getSuit().ordinal());
         return true;
     }
@@ -142,18 +140,15 @@ public class Klondike extends Solitaire {
      */
     @Override
     public boolean move(int col, int idx, int dest) {
-        int realCol = col - 1;
-        int realIdx = idx - 1;
-        int realDest = dest - 1;
-        if (!validMove(realCol, realIdx, realDest)) return false;
-        tableau.move(realCol, realIdx, realDest);
+        if (!validMove(col, idx, dest)) return false;
+        tableau.move(col, idx, dest);
         return true;
     }
 
     @Override
     protected boolean rightOrder(Card cardOrigin, Card cardDestination) {
         if (cardDestination == null) return cardOrigin.getNum().equals("K");
-        return cardDestination.getNum().equals(orderedDeck.get(orderedDeck.indexOf(cardOrigin.getNum()) - 1));
+        return validColor(cardOrigin, cardDestination) && cardDestination.getNum().equals(orderedDeck.get(orderedDeck.indexOf(cardOrigin.getNum()) - 1));
     }
 
     protected boolean rightOrderInverted(Card cardOrigin, Card cardDestination) {

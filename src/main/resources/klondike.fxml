@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane fx:id="table" alignment="CENTER" hgap="10.0" prefHeight="700.0" prefWidth="1200.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
@@ -28,7 +29,7 @@
          <rowConstraints>
             <RowConstraints maxHeight="30.0" />
             <RowConstraints maxHeight="-Infinity" minHeight="150.0" prefHeight="150.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="500.0" minHeight="10.0" prefHeight="457.6000061035156" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="300.0" prefHeight="457.6000061035156" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Canvas fx:id="deck" height="140.0" width="100.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
@@ -39,31 +40,38 @@
             <VBox fx:id="c1" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.rowIndex="2">
                <padding>
                   <Insets top="5.0" />
-               </padding></VBox>
+               </padding>
+            </VBox>
             <VBox fx:id="c2" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <padding>
                   <Insets top="5.0" />
-               </padding></VBox>
+               </padding>
+            </VBox>
             <VBox fx:id="c3" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <padding>
                   <Insets top="5.0" />
-               </padding></VBox>
+               </padding>
+            </VBox>
             <VBox fx:id="c4" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <padding>
                   <Insets top="5.0" />
-               </padding></VBox>
+               </padding>
+            </VBox>
             <VBox fx:id="c5" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <padding>
                   <Insets top="5.0" />
-               </padding></VBox>
+               </padding>
+            </VBox>
             <VBox fx:id="c6" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="5" GridPane.rowIndex="2">
                <padding>
                   <Insets top="5.0" />
-               </padding></VBox>
+               </padding>
+            </VBox>
             <VBox fx:id="c7" alignment="TOP_CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="110.0" styleClass="column" GridPane.columnIndex="6" GridPane.rowIndex="2">
                <padding>
                   <Insets top="5.0" />
-               </padding></VBox>
+               </padding>
+            </VBox>
             <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="110.0" styleClass="foundation" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <children>
                   <Canvas fx:id="f1" height="140.0" width="100.0" />
@@ -84,7 +92,7 @@
                   <Canvas fx:id="f4" height="140.0" width="100.0" />
                </children>
             </FlowPane>
-            <StackPane fx:id="waste" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <StackPane fx:id="waste" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="100.0" styleClass="waste" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <MenuButton fx:id="gameMenu" maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" text="Game" textAlignment="CENTER">
               <items>
                 <MenuItem fx:id="btnNewGame" mnemonicParsing="false" text="New Game" />
