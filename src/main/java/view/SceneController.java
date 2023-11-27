@@ -18,7 +18,7 @@ public class SceneController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
+/*
     public void switchToSpider(ActionEvent event) throws IOException {
         Spider spd = new Spider((byte) 1);
         SpiderUI view = new SpiderUI(stage, spd);
@@ -30,6 +30,24 @@ public class SceneController {
         KlondikeUI view = new KlondikeUI(stage, kld);
         KlondikeController controller = new KlondikeController(view, kld);
     }
+
+ */
+    public void switchToSpider(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/spider.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+}
+
+    public void switchToKlondike(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/klondike.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     public void switchToMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/menu.fxml"));
