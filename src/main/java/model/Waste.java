@@ -34,4 +34,8 @@ public class Waste implements Serializable {
         waste = new ArrayList<>();
         return res;
     }
+
+    public ArrayList<Card> getWaste() {
+        return waste;
+    }
 }

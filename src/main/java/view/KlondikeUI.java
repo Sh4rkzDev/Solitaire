@@ -9,11 +9,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import model.Card;
-import model.Klondike;
-import model.Tableau;
+import model.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,9 +45,21 @@ public class KlondikeUI {
 
     public void loadGame(CardController controller) {
         scene.getStylesheets().add(String.valueOf(this.getClass().getResource("/styles.css")));
+
         Canvas deck = (Canvas) table.lookup("#deck");
         if (!kld.getDeck().isEmpty())
             deck.getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
+
+        StackPane wasteUI = (StackPane) getNode("#waste");
+        if (!kld.getWaste().isEmpty()) {
+            var kldWaste = kld.getWaste().getWaste();
+            for (Card card : kldWaste) {
+                CardUI cardUI = new CardUI(card);
+                cardUI.draw();
+                cardUI.registerListener(controller);
+                wasteUI.getChildren().add(cardUI);
+            }
+        }
 
         Tableau tableau = kld.getTableau();
         for (int i = 0; i < 7; i++) {
@@ -62,6 +72,16 @@ public class KlondikeUI {
                 cardUI.setTranslateY(-110 * j);
                 cardUI.registerListener(controller);
             }
+        }
+
+        KFoundation foundation = kld.getFoundation();
+        for (int i = 0; i < foundation.size(); i++) {
+            if (foundation.colSize(i) == 0) continue;
+            Canvas actual = (Canvas) getNode("#f" + (i + 1));
+            var foundAct = foundation.getCard(i);
+            CardUI cardUI = new CardUI(foundAct);
+            actual.getGraphicsContext2D().drawImage(cardUI.getImg(), 0, 0);
+            cardUI.setMouseTransparent(true);
         }
     }
 

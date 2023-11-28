@@ -1,6 +1,4 @@
-
 package view;
-
 
 import controller.SpdCardController;
 import javafx.fxml.FXML;
@@ -13,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import model.Card;
+import model.Foundation;
 import model.Spider;
 import model.Tableau;
 
@@ -63,6 +62,14 @@ public class SpiderUI {
                 cardUI.setTranslateY(-110 * j);
                 cardUI.registerListener(controller);
             }
+        }
+
+        Foundation foundation = spd.getFoundation();
+        for (int i = 0; i < foundation.size(); i++) {
+            Canvas actual = (Canvas) getNode("#f" + (i + 1));
+            var foundAct = foundation.getStackCard(i);
+            CardUI cardUI = new CardUI(foundAct);
+            actual.getGraphicsContext2D().drawImage(cardUI.getImg(), 0, 0);
         }
     }
 

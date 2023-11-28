@@ -28,7 +28,7 @@ public class DeckController {
 
     public void handleClick(Canvas deck) {
         var added = kld.getCards();
-        if (kld.getDeck().isEmpty()) deck.setVisible(false);
+        if (!kld.redealsAvailable() && kld.getDeck().isEmpty()) deck.setVisible(false);
         if (added.isEmpty()) return;
         CardUI cardUI = new CardUI(added.get(0));
         StackPane waste = (StackPane) ui.getNode("#waste");

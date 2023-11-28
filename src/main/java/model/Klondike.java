@@ -225,4 +225,12 @@ public class Klondike extends Solitaire {
     public KFoundation getFoundation() {
         return this.foundation;
     }
+
+    public Waste getWaste() {
+        return waste;
+    }
+
+    public boolean redealsAvailable() {
+        return reDeals != 0;
+    }
 }

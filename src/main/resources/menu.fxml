@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-
 <FlowPane fx:id="root" alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" prefWrapLength="500.0" vgap="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" text="Solitaire Menu" textAlignment="CENTER">
@@ -16,13 +15,13 @@
          </font>
       </Label>
       <Separator prefHeight="25.0" prefWidth="300.0" />
-      <Button fx:id="spdButton" alignment="CENTER" minHeight="75.0" minWidth="300.0" mnemonicParsing="false" text="Spider" textAlignment="CENTER">
+      <Button fx:id="spdButton" alignment="CENTER" minHeight="75.0" minWidth="300.0" mnemonicParsing="false" styleClass="btn" text="Spider" textAlignment="CENTER">
          <font>
             <Font name="Candara" size="30.0" />
          </font>
       </Button>
       <Separator layoutX="210.0" layoutY="425.0" prefHeight="25.0" prefWidth="300.0" />
-      <Button fx:id="kldButton" minHeight="75.0" minWidth="300.0" mnemonicParsing="false" text="Klondike" textAlignment="CENTER">
+      <Button fx:id="kldButton" minHeight="75.0" minWidth="300.0" mnemonicParsing="false" styleClass="btn" text="Klondike" textAlignment="CENTER">
          <font>
             <Font size="30.0" />
          </font>

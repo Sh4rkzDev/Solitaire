@@ -147,7 +147,7 @@
                   <Canvas fx:id="f8" height="140.0" width="100.0" />
                </children>
             </FlowPane>
-            <Button fx:id="menuButton" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" text="Menu" />
+            <Button fx:id="menuButton" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="btn" text="Menu" />
          </children>
          <opaqueInsets>
             <Insets />

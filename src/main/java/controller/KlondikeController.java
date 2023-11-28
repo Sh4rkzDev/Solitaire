@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class KlondikeController {
     private final KlondikeUI view;
-    private final Klondike kld;
+    private static Klondike kld;
     private String selection = "";
     private int prevCol;
     private int prevIdx;
@@ -32,11 +32,7 @@ public class KlondikeController {
         root.setOnMouseClicked(event -> TableauController.handleClick(this));
         Button menu = (Button) view.getNode("#menuButton");
         menu.setOnAction(actionEvent -> {
-            try {
-                kld.serialize("myKlondike");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            save();
             menuController.switchToMenu();
         });
         view.getAllNodes(".column").forEach(node -> node.setOnMouseClicked(event -> {
@@ -105,6 +101,15 @@ public class KlondikeController {
                 found.getGraphicsContext2D().drawImage(cardUI.getImg(), 0, 0);
                 cardUI.setMouseTransparent(true);
             }
+        }
+    }
+
+    public static void save() {
+        if (kld == null) return;
+        try {
+            kld.serialize("src/main/resources/games/myKlondike");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

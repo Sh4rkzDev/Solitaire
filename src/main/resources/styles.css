@@ -16,6 +16,31 @@ CardUI {
 
 .foundation {
     -fx-background-color: #392f0e;
-    -fx-opacity: 0.3;
     -fx-background-radius: 10;
+}
+
+.btn {
+    -fx-border-color: #6f6d6d;
+    -fx-border-radius: 10;
+    -fx-background-color: #313030;
+    -fx-background-radius: 10;
+    -fx-text-fill: #6f6d6d;
+}
+
+.btn:hover {
+    -fx-background-color: #403f3f;
+    -fx-background-radius: 10;
+}
+
+.btn:pressed {
+    -fx-background-color: #141414;
+    -fx-background-radius: 10;
+}
+
+#input {
+    -fx-border-color: #6f6d6d;
+    -fx-border-radius: 10;
+    -fx-background-color: #313030;
+    -fx-background-radius: 10;
+    -fx-text-fill: #6f6d6d;
 }

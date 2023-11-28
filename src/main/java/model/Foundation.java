@@ -14,6 +14,10 @@ public class Foundation implements Serializable {
         foundation.add(stack);
     }
 
+    public Card getStackCard(int col) {
+        return foundation.get(col).get(0);
+    }
+
     public int size() {
         return foundation.size();
     }

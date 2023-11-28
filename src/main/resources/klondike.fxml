@@ -111,7 +111,7 @@
                </children>
             </FlowPane>
             <StackPane fx:id="waste" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="100.0" styleClass="waste" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="menuButton" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" text="Menu" />
+            <Button fx:id="menuButton" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" styleClass="btn" text="Menu" />
          </children>
          <opaqueInsets>
             <Insets />

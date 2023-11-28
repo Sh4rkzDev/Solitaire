@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class Spider extends Solitaire {
 
+    private boolean toFoundation = false;
+
     /**
      * Constructor of the model.Spider model.Solitaire Game.
      *
@@ -86,7 +88,8 @@ public class Spider extends Solitaire {
     public boolean move(int col, int idx, int dest) {
         if (!validMove(col, idx, dest)) return false;
         tableau.move(col, idx, dest);
-        checkSequence(dest);
+        if (checkSequence(dest)) toFoundation = true;
+        else toFoundation = false;
         return true;
     }
 
@@ -136,7 +139,7 @@ public class Spider extends Solitaire {
      *
      * @param dest The column where the last move was carried out.
      */
-    public boolean checkSequence(int dest) {
+    private boolean checkSequence(int dest) {
         if (tableau.colSize(dest) < 13) return false;
         int idx = 12;
         Suit suit = tableau.getCard(dest).getSuit();
@@ -183,5 +186,9 @@ public class Spider extends Solitaire {
             res = (Spider) obj.readObject();
         }
         return res;
+    }
+
+    public boolean lastRemovedToFoundation() {
+        return toFoundation;
     }
 }
