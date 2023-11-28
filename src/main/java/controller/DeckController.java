@@ -6,8 +6,8 @@ import model.Klondike;
 import view.CardUI;
 import view.KlondikeUI;
 
-public class    DeckController {
-    private Klondike kld;
+public class DeckController {
+    private final Klondike kld;
     private KlondikeUI ui;
 
     public void setCardController(CardController cardController) {
@@ -28,17 +28,16 @@ public class    DeckController {
 
     public void handleClick(Canvas deck) {
         var added = kld.getCards();
-        if (added.isEmpty()) {
-            deck.setVisible(false);
-        } else {
-            CardUI cardUI = new CardUI(added.get(0));
-            StackPane waste = (StackPane) ui.getNode("#waste");
-            waste.getChildren().add(cardUI);
-            cardUI.draw();
-            cardUI.setOnMouseClicked(event -> {
-                cardController.handleClick(cardUI);
-                event.consume();
-            });
-        }
+        if (kld.getDeck().isEmpty()) deck.setVisible(false);
+        if (added.isEmpty()) return;
+        CardUI cardUI = new CardUI(added.get(0));
+        StackPane waste = (StackPane) ui.getNode("#waste");
+        waste.getChildren().add(cardUI);
+        cardUI.draw();
+        cardUI.setOnMouseClicked(event -> {
+            cardController.handleClick(cardUI);
+            event.consume();
+        });
     }
 }
+

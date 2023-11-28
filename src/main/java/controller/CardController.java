@@ -1,14 +1,11 @@
 package controller;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import model.Klondike;
 import view.CardUI;
-import view.KlondikeUI;
 
 public class CardController {
-    private Klondike kld;
-    private KlondikeUI ui;
+    private final Klondike kld;
     private KlondikeController kldController;
 
     public CardController(Klondike kld) {
@@ -17,10 +14,6 @@ public class CardController {
 
     public void setKldController(KlondikeController kldController) {
         this.kldController = kldController;
-    }
-
-    public void setUi(KlondikeUI ui) {
-        this.ui = ui;
     }
 
     public void handleClick(CardUI card) {

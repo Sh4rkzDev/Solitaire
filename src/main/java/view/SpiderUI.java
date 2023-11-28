@@ -22,13 +22,10 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class SpiderUI {
-    private Spider spd;
+    private final Spider spd;
     private final Scene scene;
     @FXML
     private GridPane table;
-
-    public SpiderUI() {
-    }
 
     public AnchorPane getRoot() {
         return root;
@@ -37,7 +34,7 @@ public class SpiderUI {
     @FXML
     private AnchorPane root;
 
-    public SpiderUI(Stage stage, Spider spd, SpdCardController controller) {
+    public SpiderUI(Stage stage, Spider spd) {
         this.spd = spd;
         var loader = new FXMLLoader(getClass().getResource("/spider.fxml"));
         loader.setController(this);
@@ -47,12 +44,11 @@ public class SpiderUI {
             throw new RuntimeException(e);
         }
         scene = new Scene(root, root.getWidth(), root.getHeight());
-        loadGame(controller);
         stage.setScene(scene);
         stage.show();
     }
 
-    private void loadGame(SpdCardController controller) {
+    public void loadGame(SpdCardController controller) {
         scene.getStylesheets().add(String.valueOf(this.getClass().getResource("/styles.css")));
         Canvas deck = (Canvas) table.lookup("#deck");
         deck.getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
@@ -60,20 +56,12 @@ public class SpiderUI {
         Tableau tableau = spd.getTableau();
         for (int i = 0; i < 10; i++) {
             VBox col = (VBox) table.lookup("#c" + (i + 1));
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < tableau.colSize(i); j++) {
                 Card card = tableau.getCard(i, j);
                 CardUI cardUI = new CardUI(card);
                 col.getChildren().add(cardUI);
                 cardUI.draw();
                 cardUI.setTranslateY(-110 * j);
-                cardUI.registerListener(controller);
-            }
-            if (i<4){
-                Card card = tableau.getCard(i,4);
-                CardUI cardUI = new CardUI(card);
-                col.getChildren().add(cardUI);
-                cardUI.draw();
-                cardUI.setTranslateY(-110 * 4);
                 cardUI.registerListener(controller);
             }
         }

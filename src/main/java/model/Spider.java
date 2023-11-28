@@ -86,7 +86,7 @@ public class Spider extends Solitaire {
     public boolean move(int col, int idx, int dest) {
         if (!validMove(col, idx, dest)) return false;
         tableau.move(col, idx, dest);
-        if (tableau.colSize(dest) >= 13) checkSequence(dest);
+        checkSequence(dest);
         return true;
     }
 
@@ -136,16 +136,18 @@ public class Spider extends Solitaire {
      *
      * @param dest The column where the last move was carried out.
      */
-    private void checkSequence(int dest) {
+    public boolean checkSequence(int dest) {
+        if (tableau.colSize(dest) < 13) return false;
         int idx = 12;
         Suit suit = tableau.getCard(dest).getSuit();
         for (int i = tableau.colSize(dest) - 1; i >= tableau.colSize(dest) - 13; i--) {
             Card card = tableau.getCard(dest, i);
-            if (!card.getNum().equals(orderedDeck.get(idx)) || card.getSuit() != suit) return;
+            if (!card.getNum().equals(orderedDeck.get(idx)) || card.getSuit() != suit) return false;
             idx--;
         }
         ArrayList<Card> stack = tableau.removeCards(dest, tableau.colSize(dest) - 13);
         foundation.addStack(stack);
+        return true;
     }
 
     @Override

@@ -1,14 +1,11 @@
 package controller;
 
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Spider;
 import view.CardUI;
-import view.SpiderUI;
 
 public class SpdCardController {
-    private Spider spd;
-    private SpiderUI ui;
+    private final Spider spd;
     private SpiderController spdController;
 
     public SpdCardController(Spider spd) {
@@ -19,19 +16,15 @@ public class SpdCardController {
         this.spdController = spdController;
     }
 
-    public void setUi(SpiderUI ui) {
-        this.ui = ui;
-    }
-
     public void handleClick(CardUI card) {
-        Pane column = (Pane) card.getParent();
-        int col = Character.getNumericValue(column.getId().charAt(1)) - 1;
-        if (col >= 0) {
+        VBox column = (VBox) card.getParent();
+        int col = Integer.parseInt(column.getId().substring(1)) - 1;
+        if (spdController.getPrevCol() >= 0) {
             spdController.move(col);
             return;
         }
         int idx = column.getChildren().indexOf(card);
-        if (card.getParent().getStyleClass().get(0).equals("column") && !spd.validSlice(col, idx)) {
+        if (!spd.validSlice(col, idx)) {
             return;
         }
         spdController.setPrevCol(col);

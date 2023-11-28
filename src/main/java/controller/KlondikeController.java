@@ -13,17 +13,19 @@ import java.util.ArrayList;
 public class KlondikeController {
     private final KlondikeUI view;
     private final Klondike kld;
-    private final DeckController deckController;
     private String selection = "";
     private int prevCol;
     private int prevIdx;
 
-    public KlondikeController(KlondikeUI view, Klondike kld, CardController cardController) {
+    public KlondikeController(KlondikeUI view, Klondike kld) {
         this.view = view;
         this.kld = kld;
-        deckController = new DeckController(kld);
+        DeckController deckController = new DeckController(kld);
         deckController.setUi(view);
+        CardController cardController = new CardController(kld);
+        view.loadGame(cardController);
         deckController.setCardController(cardController);
+        cardController.setKldController(this);
         AnchorPane root = view.getRoot();
         root.setOnMouseClicked(event -> TableauController.handleClick(this));
         view.getAllNodes(".column").forEach(node -> node.setOnMouseClicked(event -> {
@@ -33,9 +35,7 @@ public class KlondikeController {
             event.consume();
             selection = "";
         }));
-        view.getAllNodes(".foundation").forEach(node -> node.setOnMouseClicked(event -> {
-            FoundationController.handleClick(this);
-        }));
+        view.getAllNodes(".foundation").forEach(node -> node.setOnMouseClicked(event -> FoundationController.handleClick(this)));
     }
 
     public void setSelection(String selection) {
@@ -48,10 +48,6 @@ public class KlondikeController {
 
     public void setPrevCol(int prevCol) {
         this.prevCol = prevCol;
-    }
-
-    public int getPrevIdx() {
-        return prevIdx;
     }
 
     public void setPrevIdx(int prevIdx) {

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class KlondikeUI {
-    private Klondike kld;
+    private final Klondike kld;
     private final Scene scene;
     @FXML
     private GridPane table;
@@ -32,7 +32,7 @@ public class KlondikeUI {
     @FXML
     private AnchorPane root;
 
-    public KlondikeUI(Stage stage, Klondike kld, CardController controller) {
+    public KlondikeUI(Stage stage, Klondike kld) {
         this.kld = kld;
         var loader = new FXMLLoader(getClass().getResource("/klondike.fxml"));
         loader.setController(this);
@@ -42,12 +42,11 @@ public class KlondikeUI {
             throw new RuntimeException(e);
         }
         scene = new Scene(root, root.getWidth(), root.getHeight());
-        loadGame(controller);
         stage.setScene(scene);
         stage.show();
     }
 
-    private void loadGame(CardController controller) {
+    public void loadGame(CardController controller) {
         scene.getStylesheets().add(String.valueOf(this.getClass().getResource("/styles.css")));
         Canvas deck = (Canvas) table.lookup("#deck");
         deck.getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
