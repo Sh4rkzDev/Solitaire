@@ -12,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import model.Card;
 import model.Spider;
 import model.Tableau;
@@ -34,7 +33,8 @@ public class SpiderUI {
     @FXML
     private AnchorPane root;
 
-    public SpiderUI(Stage stage, Spider spd) {
+    public SpiderUI(Scene scene, Spider spd) {
+        this.scene = scene;
         this.spd = spd;
         var loader = new FXMLLoader(getClass().getResource("/spider.fxml"));
         loader.setController(this);
@@ -43,15 +43,14 @@ public class SpiderUI {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        scene = new Scene(root, root.getWidth(), root.getHeight());
-        stage.setScene(scene);
-        stage.show();
+        scene.setRoot(root);
     }
 
     public void loadGame(SpdCardController controller) {
         scene.getStylesheets().add(String.valueOf(this.getClass().getResource("/styles.css")));
         Canvas deck = (Canvas) table.lookup("#deck");
-        deck.getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
+        if (!spd.getDeck().isEmpty())
+            deck.getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
 
         Tableau tableau = spd.getTableau();
         for (int i = 0; i < 10; i++) {

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SceneController">
+<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane fx:id="table" alignment="CENTER" hgap="10.0" minWidth="1200.0" prefHeight="700.0" prefWidth="1300.0" vgap="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
          <columnConstraints>
@@ -147,7 +147,7 @@
                   <Canvas fx:id="f8" height="140.0" width="100.0" />
                </children>
             </FlowPane>
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#switchToMenu" prefHeight="30.0" prefWidth="65.0" text="Menu" />
+            <Button fx:id="menuButton" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="65.0" text="Menu" />
          </children>
          <opaqueInsets>
             <Insets />

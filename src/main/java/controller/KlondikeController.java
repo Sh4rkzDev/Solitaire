@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -8,6 +9,7 @@ import model.Klondike;
 import view.CardUI;
 import view.KlondikeUI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class KlondikeController {
@@ -17,7 +19,7 @@ public class KlondikeController {
     private int prevCol;
     private int prevIdx;
 
-    public KlondikeController(KlondikeUI view, Klondike kld) {
+    public KlondikeController(KlondikeUI view, Klondike kld, MenuController menuController) {
         this.view = view;
         this.kld = kld;
         DeckController deckController = new DeckController(kld);
@@ -28,6 +30,15 @@ public class KlondikeController {
         cardController.setKldController(this);
         AnchorPane root = view.getRoot();
         root.setOnMouseClicked(event -> TableauController.handleClick(this));
+        Button menu = (Button) view.getNode("#menuButton");
+        menu.setOnAction(actionEvent -> {
+            try {
+                kld.serialize("myKlondike");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            menuController.switchToMenu();
+        });
         view.getAllNodes(".column").forEach(node -> node.setOnMouseClicked(event -> {
             if (selection.isEmpty()) return;
             int col = Character.getNumericValue(node.getId().charAt(1)) - 1;

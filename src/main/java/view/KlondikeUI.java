@@ -32,8 +32,9 @@ public class KlondikeUI {
     @FXML
     private AnchorPane root;
 
-    public KlondikeUI(Stage stage, Klondike kld) {
+    public KlondikeUI(Scene scene, Klondike kld) {
         this.kld = kld;
+        this.scene = scene;
         var loader = new FXMLLoader(getClass().getResource("/klondike.fxml"));
         loader.setController(this);
         try {
@@ -41,20 +42,19 @@ public class KlondikeUI {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        scene = new Scene(root, root.getWidth(), root.getHeight());
-        stage.setScene(scene);
-        stage.show();
+        scene.setRoot(root);
     }
 
     public void loadGame(CardController controller) {
         scene.getStylesheets().add(String.valueOf(this.getClass().getResource("/styles.css")));
         Canvas deck = (Canvas) table.lookup("#deck");
-        deck.getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
+        if (!kld.getDeck().isEmpty())
+            deck.getGraphicsContext2D().drawImage(new Image(String.valueOf(getClass().getResource("/img/1B.png"))), 0, 0);
 
         Tableau tableau = kld.getTableau();
         for (int i = 0; i < 7; i++) {
             VBox col = (VBox) table.lookup("#c" + (i + 1));
-            for (int j = 0; j < i + 1; j++) {
+            for (int j = 0; j < tableau.colSize(i); j++) {
                 Card card = tableau.getCard(i, j);
                 CardUI cardUI = new CardUI(card);
                 col.getChildren().add(cardUI);

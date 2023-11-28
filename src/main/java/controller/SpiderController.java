@@ -1,9 +1,12 @@
 package controller;
 
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import model.Spider;
 import view.SpiderUI;
+
+import java.io.IOException;
 
 public class SpiderController {
     private final SpiderUI view;
@@ -11,7 +14,7 @@ public class SpiderController {
     private int prevCol = -1;
     private int prevIdx;
 
-    public SpiderController(SpiderUI view, Spider spd) {
+    public SpiderController(SpiderUI view, Spider spd, MenuController menuController) {
         this.view = view;
         this.spd = spd;
         SpdDeckController spdDeckController = new SpdDeckController(spd);
@@ -22,6 +25,15 @@ public class SpiderController {
         spdCardController.setSpdController(this);
         AnchorPane root = view.getRoot();
         root.setOnMouseClicked(event -> TableauController.handleClick(this));
+        Button menu = (Button) view.getNode("#menuButton");
+        menu.setOnAction(actionEvent -> {
+            try {
+                spd.serialize("mySpider");
+            } catch (IOException e) {
+                System.out.println("No se pudo guardar el juego Spider");
+            }
+            menuController.switchToMenu();
+        });
         view.getAllNodes(".column").forEach(node -> node.setOnMouseClicked(event -> {
             if (prevCol < 0) return;
             int col = Character.getNumericValue(node.getId().charAt(1)) - 1;
