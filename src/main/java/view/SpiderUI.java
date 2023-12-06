@@ -21,6 +21,11 @@ import java.util.Set;
 
 public class SpiderUI {
     private final Spider spd;
+
+    public Scene getScene() {
+        return scene;
+    }
+
     private final Scene scene;
     @FXML
     private GridPane table;

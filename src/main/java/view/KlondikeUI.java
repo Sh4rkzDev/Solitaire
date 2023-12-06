@@ -19,6 +19,11 @@ import java.util.Set;
 
 public class KlondikeUI {
     private final Klondike kld;
+
+    public Scene getScene() {
+        return scene;
+    }
+
     private final Scene scene;
     @FXML
     private GridPane table;

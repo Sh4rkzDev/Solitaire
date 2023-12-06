@@ -29,5 +29,9 @@ public class SpdCardController {
         }
         spdController.setPrevCol(col);
         spdController.setPrevIdx(idx);
+        for (int i = idx; i < column.getChildren().size(); i++) {
+            CardUI cardUI = (CardUI) column.getChildren().get(i);
+            cardUI.addEffect();
+        }
     }
 }

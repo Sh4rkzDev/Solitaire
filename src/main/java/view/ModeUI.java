@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 public class ModeUI {
-    private String game;
     @FXML
     private VBox root;
 

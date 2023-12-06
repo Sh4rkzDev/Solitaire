@@ -3,6 +3,7 @@ package view;
 import controller.CardController;
 import controller.SpdCardController;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import model.Card;
@@ -59,6 +60,14 @@ public class CardUI extends Pane {
 
     public Image getImg() {
         return img;
+    }
+
+    public void addEffect() {
+        canvas.setEffect(new Glow(0.8));
+    }
+
+    public void removeEffect() {
+        canvas.setEffect(null);
     }
 
     public Suit getSuit() {
