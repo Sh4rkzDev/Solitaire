@@ -34,7 +34,7 @@ public class MenuController {
 
 
     public void switchToSpider(Scene scene) {
-        var gameMode = new ModeUI(scene, "Spider", "One Suit", "Two Suits", "Three Suits");
+        var gameMode = new ModeUI(scene, "Spider", "One Suit", "Two Suits", "Four Suits");
         File spdFile = new File("src/main/resources/games/mySpider");
 
         if (!spdFile.exists()) {
