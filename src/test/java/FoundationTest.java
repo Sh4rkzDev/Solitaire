@@ -1,3 +1,5 @@
+import model.Card;
+import model.Foundation;
 import org.junit.Test;
 
 import java.util.ArrayList;

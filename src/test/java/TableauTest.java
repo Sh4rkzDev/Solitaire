@@ -1,3 +1,6 @@
+import model.Card;
+import model.Suit;
+import model.Tableau;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,0 +1,46 @@
+#root {
+    -fx-background-image: url("img/background4.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.column {
+    -fx-background-color: #393838;
+    -fx-background-radius: 10;
+}
+
+CardUI {
+    -fx-opacity: 1.0;
+}
+
+.foundation {
+    -fx-background-color: #392f0e;
+    -fx-background-radius: 10;
+}
+
+.btn {
+    -fx-border-color: #6f6d6d;
+    -fx-border-radius: 10;
+    -fx-background-color: #313030;
+    -fx-background-radius: 10;
+    -fx-text-fill: #6f6d6d;
+}
+
+.btn:hover {
+    -fx-background-color: #403f3f;
+    -fx-background-radius: 10;
+}
+
+.btn:pressed {
+    -fx-background-color: #141414;
+    -fx-background-radius: 10;
+}
+
+#input {
+    -fx-border-color: #6f6d6d;
+    -fx-border-radius: 10;
+    -fx-background-color: #313030;
+    -fx-background-radius: 10;
+    -fx-text-fill: #6f6d6d;
+}

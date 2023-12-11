@@ -1,4 +1,7 @@
 import junit.framework.TestCase;
+import model.Card;
+import model.Deck;
+import model.Suit;
 import org.junit.Test;
 
 import java.util.ArrayList;

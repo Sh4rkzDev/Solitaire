@@ -1,3 +1,6 @@
+import model.Card;
+import model.KFoundation;
+import model.Suit;
 import org.junit.Test;
 
 import java.util.ArrayList;
